@@ -1,0 +1,33 @@
+#cast-circle {
+	position: absolute;
+
+	width: 600px;
+	height: 600px;
+	top: 0px;
+	left: 0px;
+}
+
+.cast-point {
+	position: absolute;
+
+	width: 75px;
+	height: 75px;
+	background-color: salmon;
+}
+
+#cast-point0 {
+	left: 100px;
+	top: 100px;
+}
+#cast-point1 {
+	left: 425px;
+	top: 100px;
+}
+#cast-point2 {
+	left: 425px;
+	top: 425px;
+}
+#cast-point3 {
+	left: 100px;
+	top: 425px;
+}

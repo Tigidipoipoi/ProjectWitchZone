@@ -1,0 +1,117 @@
+Remarques
+	Online non obligatoire!
+
+Format paysage
+
+Combat en 2 temps
+Sélection de son équipe
+1 phase de préparation
+	Sélection de l'arme à utiliser
+1 phase de combat
+	Dessin de l'incantation désirée (une forme <=> un élément)
+4 éléments d'attaques
+	eau > feu > air > terre > eau ...
+Une catégorie d'arme <=> un set d'éléments disponibles (2 par arme)
+	Axe
+	Bow
+	Dagger
+	Orb
+	Staff
+	Sword
+
+Pense-bête
+	Durant le dessin de l'ancantation mettre le patron de l'incantation en fond en transparance|surbrillance|autre de la couleur de l'élément
+	Les combatants ont des vitesse pour définir l'ordre lors de la seconde phase
+
+Idées
+	CD sur les attaques (extendable à l'élément)
+	Score de dessin
+	Un élément neutre ?
+	On voit l'arme selectionnée mais pas l'élément
+	Si mauvais dessin
+		tout les traits effacés et recommence
+		Pas de timer
+	Selection héros
+		Infobulle
+			faiblesse
+			armes dispos
+
+Background
+	Que des sorciers
+
+Téchnique
+	Création d'une biblio de données
+	IA
+	Reconnaissance des formes
+	Création d'une salle réseau
+
+Project Witch Zone
+
+Structure logique
+	main
+	Game
+	Scene
+		Title
+			Options
+			Help
+		SelectTeam
+			Details:
+				Clic sur perso pour voir stats
+				Clic sur bouton valider pour ajouter à l'équipe
+				Clic sur bouton retirer pour retirer de l'équipe
+				Bouton écran titre
+				Quand équipe complète: bouton start
+		Battle
+			Details:
+
+			EndBattle
+	Weapon
+	{
+		Spell
+		Spell
+		...render
+	}
+	Spell
+	{
+		element
+		...render
+	}
+	Player
+	{
+		Input
+		Team (Fighter[])
+	}
+	Fighter
+	{
+		name
+
+		hp
+		power
+		speed
+
+		weakness
+		toughness
+
+		...render
+	}
+
+	managers
+		HUD
+		Dessins
+			voir brouillon
+
+Aide à la reconnaissance des tracés
+	Autour de chaque point on fixe une zone de reconnaissance dans laquelle
+	le touch est automatiquement clampé sur le point du cercle.
+	Durant le déplacement d'un point à un autre on trace à chaque frame,
+	au passage dans une autre zone on clampe automatiquement.
+	On empêche de reclamper dans la dernière zone et la zone actuelle.
+
+Questions à poser
+	Changement de scène
+	Comment adapter la résolution d'écran
+
+ToDo
+	Pouvoir changer de combattant à la mort de l'actuelle
+	Calcul de l'ordre de passage
+	Calcul des dommages
