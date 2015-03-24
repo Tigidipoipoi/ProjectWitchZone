@@ -28,17 +28,16 @@ var Game = function() {
 		var offset = getOffset(self.canvas);
 		self.onClick(
 			(e.clientX - offset.left),
-			(e.clientY - offset.top) );
+			(e.clientY - offset.top));
 	});
 };
 Game.WIDTH = 800;
 Game.HEIGHT = 600;
 Game.EPSILON = 0.001;
-Game.prototype.onClick = function(x, y)
-{
+
+Game.prototype.onClick = function(x, y) {
 	this.scene.onClick(x, y);
 };
-
 
 Game.prototype.mainLoop = function() {
 	var now = Date.now();

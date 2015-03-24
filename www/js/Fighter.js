@@ -3,7 +3,7 @@ var Fighter = function (id) {
 
 	this.weapons = [];
 	if (id == 0) {
-		this.name = "Number1";
+		this.name = "Number0";
 
 		this.weapons[0] = new Weapon("Axe");
 		this.weapons[1] = new Weapon("Bow");

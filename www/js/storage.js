@@ -39,4 +39,4 @@ storage =
 	{
 		localStorage.clear();
 	}
-}
+};

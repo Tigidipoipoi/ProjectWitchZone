@@ -32,51 +32,13 @@ var BattleScene = function(game, id) {
 	this.currentPlayerFighter = this.player.fighters[this.player.currentFightersPlayerIndex]; 
 
 	// Clamps
-	
-		this.clampPoints = [new Point(100,100),new Point(100,500),new Point(500,500),new Point(500,100)];
-		/*for (var i = 0; i < 4; ++i) {
-			this.clampPoints[i] = document.getElementById("cast-point" + i);
-			this.clampPoints[i].addEventListener("click", function(e) {
-				if (self.isDrawing) {
-					var pointsOfCastLength = self.pointsOfCast.length;
+	this.clampPoints = [new Point(100, 100), new Point(100, 500),
+		new Point(500, 500), new Point(500, 100)];
+	for (var i = 0; i < this.clampPoints.length; ++i) {
+		this.clampPoints[i].id = i;
+	}
 
-					if (self.pointsOfCast[pointsOfCastLength - 1] != this
-						&& self.pointsOfCast[pointsOfCastLength - 2] != this) {
-						self.pointsOfCast[pointsOfCastLength] = this;
-
-						if (pointsOfCastLength == 3) {
-							self.isDrawing = false;
-
-							var currentElement = self.getElementFromDraw();
-							var canCast = self.canCast(currentElement);
-							if (canCast) {
-								self.cast(currentElement);
-								this.playerCanAttack = false;
-								var enemySpell = self.currentEnemyFighter.weapons[self.currentEnemyFighter.enemySelectedWeaponIndex].spells[0].element;
-								self.enemyCast(enemySpell);
-								drawLine();
-							}
-							else {
-								console.log("You can't use this element with your current weapon");
-							}
-						}
-					}
-				}
-				else {
-					self.pointsOfCast = [];
-					self.pointsOfCast[0] = this;
-					self.isDrawing = true;
-				}
-			}, false);
-		}	*/
-		
-
-		this.pointsOfCast = [];
-		
-		
-	
-
-
+	this.touchedPoints = [];
 
 	sceneDebug = this;
 };
@@ -85,10 +47,10 @@ BattleScene.prototype.getElementFromDraw = function() {
 	var ids = [];
 
 	for (var i = 0; i < 4; ++i) {
-		ids[i] = this.pointsOfCast[i].id.substring(10, 11);
+		ids[i] = this.touchedPoints[i].id;
 	}
 
-	var spellsElement = "";
+	var spellsElement = Element.NONE;
 	// Earth
 	if (parseInt(ids[0]) == parseInt(ids[3])) {
 		spellsElement = Element.EARTH;
@@ -109,7 +71,7 @@ BattleScene.prototype.getElementFromDraw = function() {
 	return spellsElement;
 };
 
-BattleScene.prototype.canCast = function(currentElement) {
+BattleScene.prototype.checkPossibleCast = function(currentElement) {
 	var currentFighter = this.player.fighters[this.player.currentFightersPlayerIndex]; 
 	var currentWeapon = currentFighter.weapons[currentFighter.selectedWeaponIndex];
 
@@ -124,89 +86,56 @@ BattleScene.prototype.canCast = function(currentElement) {
 };
 
 BattleScene.prototype.cast = function(currentElement) {
-	console.log("Cast");
 	var multiplicator = 1;
-	if (currentElement == this.currentEnemyFighter.weakness)
-	{
+	if (currentElement == this.currentEnemyFighter.weakness) {
 		multiplicator = 1.5;
 	}
-	else if (currentElement == this.currentEnemyFighter.toughness)
-	{
+	else if (currentElement == this.currentEnemyFighter.toughness) {
 		multiplicator = 0.5;
 	}
 	
-	this.currentEnemyFighter.hp = Math.max(0, this.currentEnemyFighter.hp-(this.currentPlayerFighter.power * multiplicator));
+	this.currentEnemyFighter.hp =
+		Math.max(0, this.currentEnemyFighter.hp -
+		(this.currentPlayerFighter.power * multiplicator));
 	console.log(this.currentEnemyFighter.hp);
-	if (this.currentEnemyFighter.hp == 0)
-	{
-		this.foe.currentFightersEnemyIndex++;
-		if(this.foe.currentFightersEnemyIndex < 3)
-		{		
+	if (this.currentEnemyFighter.hp == 0) {
+		++this.foe.currentFightersEnemyIndex;
+		if(this.foe.currentFightersEnemyIndex < 3) {		
 			this.currentEnemyFighter = this.foe.fighters[this.foe.currentFightersEnemyIndex];
 			console.log("il est mort, au suivant");
 		}
-		else 
-			console.log("j'ai gagné");
-		
+		else {
+			console.log("j'ai gagné");			
+		}
 	}
-	
-	// Compute damages
 };
 
-BattleScene.prototype.enemyCast = function(currentElement)
-{
+BattleScene.prototype.enemyCast = function(currentElement) {
 	console.log("EnemyCast");
 	var multiplicator = 1;
-	if (currentElement == this.currentPlayerFighter.weakness)
-	{
+	if (currentElement == this.currentPlayerFighter.weakness) {
 		multiplicator = 1.5;
 	}
-	else if (currentElement == this.currentPlayerFighter.toughness)
-	{
+	else if (currentElement == this.currentPlayerFighter.toughness) {
 		multiplicator = 0.5;
 	}
 	
-	this.currentPlayerFighter.hp = Math.max(0, this.currentPlayerFighter.hp-(this.currentEnemyFighter.power * multiplicator));
+	this.currentPlayerFighter.hp = Math.max(0, this.currentPlayerFighter.hp
+		- this.currentEnemyFighter.power * multiplicator);
 	console.log("currentPlayerHP : "+this.currentPlayerFighter.hp);
-	if (this.currentPlayerFighter.hp == 0)
-	{
-		this.player.currentFightersPlayerIndex++;
-		if(this.player.currentFightersPlayerIndex < 3)
-		{		
-			this.currentPlayerFighter = this.player.fighters[this.player.currentFightersPlayerIndex];
+	if (this.currentPlayerFighter.hp == 0) {
+		++this.player.currentFightersPlayerIndex;
+		if(this.player.currentFightersPlayerIndex < 3) {		
+			this.currentPlayerFighter =
+				this.player.fighters[this.player.currentFightersPlayerIndex];
 			console.log("j'ai perdu un combattant arg !");
 		}
-		else 
+		else {
 			console.log("j'ai perdu");
-		
+		}
 	}
 	this.playerCanAttack = true;
 }
-
-BattleScene.prototype.clampHandling = function(e) {
-	if (self.isDrawing) {
-		var pointsOfCastLength = self.pointsOfCast.length;
-
-		if (self.pointsOfCast[pointsOfCastLength - 1] != this
-			&& self.pointsOfCast[pointsOfCastLength - 2] != this) {
-			self.pointsOfCast[pointsOfCastLength] = this;
-
-			if (pointsOfCastLength == 3) {
-				self.isDrawing = false;
-
-				var canCast = self.canCast();
-				if (canCast) {
-					console.log("Cast");
-				}
-			}
-		}
-	}
-	else {
-		self.pointsOfCast = [];
-		self.pointsOfCast[0] = this;
-		self.isDrawing = true;
-	}
-};
 
 BattleScene.prototype.update = function(timeData) {
 };
@@ -217,18 +146,13 @@ BattleScene.prototype.render = function(g) {
 			g.translate(-this.x, -this.y);
 			g.drawImage(this.background, 0, 0);
 		}
-		for(var i = 0 ; i < this.clampPoints.length; i++)
-		{
+		for(var i = 0 ; i < this.clampPoints.length; ++i) {
 			this.clampPoints[i].render(g);
 		}
 	g.restore();
-	
-	
-	
 };
 
-function drawLine(firstPoint, secondPoint)
-{
+function drawLine(firstPoint, secondPoint) {
 	var canvas = document.getElementById('game');
 	var g = canvas.getContext('2d');
 	g.beginPath();
@@ -239,17 +163,45 @@ function drawLine(firstPoint, secondPoint)
 	g.closePath();
 }  
 
-BattleScene.prototype.onClick = function(x,y)
-{
-	for(var i = 0; i<this.clampPoints.length;i++)
-	{
-		//if (this.clampPoints[i].x < x+40 && this.clampPoints[i].x > x-40 && this.clampPoints[i].y < y+40 && this.clampPoints[i].y > y-40)
-		if(((this.clampPoints[i].x-x)*(this.clampPoints[i].x-x)+(this.clampPoints[i].y-y)*(this.clampPoints[i].y-y)) < 40*40)
-		{
-			this.clampPoints[i].active = true ;
+BattleScene.prototype.onClick = function(x, y) {
+	var activeClampPoints = 0;
+
+	for (var i = 0; i < this.clampPoints.length; ++i) {
+		if (Math.pow(this.clampPoints[i].x - x, 2) 
+			+ Math.pow(this.clampPoints[i].y - y, 2) < Math.pow(40, 2)) {
+			var tPtsLength = this.touchedPoints.length;
+			
+			// We don't add last touched and previous last touched
+			if (this.touchedPoints[tPtsLength - 1] != this.clampPoints[i]
+				&& this.touchedPoints[tPtsLength - 2] != this.clampPoints[i]) {
+				this.clampPoints[i].active = true;
+				this.touchedPoints[tPtsLength] = this.clampPoints[i];
+
+				if (tPtsLength == 3) {
+					this.tryToCast();
+				}
+				break;
+			}
 		}
 	}
 };
 
- 
- 
+BattleScene.prototype.tryToCast = function() {
+	var currentElement = this.getElementFromDraw();
+	var canCast = this.checkPossibleCast(currentElement);
+	
+	if (canCast) {
+		this.cast(currentElement);
+	}
+
+	this.resetDraw();
+};
+
+BattleScene.prototype.resetDraw = function() {
+	this.touchedPoints = [];
+	this.isDrawing = false;
+
+	for (var i = 0; i < this.clampPoints.length; ++i) {
+		this.clampPoints[i].active = false;
+	}
+};
