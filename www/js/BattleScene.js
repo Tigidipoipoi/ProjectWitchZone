@@ -193,6 +193,9 @@ BattleScene.prototype.tryToCast = function() {
 	if (canCast) {
 		this.cast(currentElement);
 	}
+	else {
+		console.log("You can't use this element with your current weapon.");
+	}
 
 	this.resetDraw();
 };
