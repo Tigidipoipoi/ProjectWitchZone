@@ -21,3 +21,8 @@ Scene.prototype.render = function(g) {
 		}
 	g.restore();
 };
+
+Scene.prototype.onClick = function(x,y)
+{
+	
+};

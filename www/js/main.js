@@ -6,13 +6,13 @@ window.addEventListener("load", function () {
 
 	game = new Game();
 
-	for (var i = 0; i < 4; ++i) {
+	/*for (var i = 0; i < 4; ++i) {
 		var temp = document.getElementById("cast-point" + i);
 		temp.addEventListener("touchstart", function(e) {
 	    	e.preventDefault();
 	    	console.log("Pourquoi ça marche pas ?");
 		}, false)
-	}
+	}*/
 });
 
 play = function () {
@@ -34,4 +34,19 @@ if ('ontouchstart' in document.documentElement) {
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
+}
+
+
+function getOffset(elm)
+{
+	var offset = {
+		left:0,
+		top:0
+	};
+	do{
+		offset.left += elm.offsetLeft;
+		offset.top += elm.offsetTop;
+	}while(elm = elm.offsetParent);
+	
+	return offset;
 }
