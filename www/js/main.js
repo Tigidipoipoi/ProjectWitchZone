@@ -32,21 +32,22 @@ if ('ontouchstart' in document.documentElement) {
   console.log("AZERTY");
 }
 
+// Max excluded
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
 
-function getOffset(elm)
-{
+function getOffset(elm) {
 	var offset = {
 		left:0,
 		top:0
 	};
+
 	do{
 		offset.left += elm.offsetLeft;
 		offset.top += elm.offsetTop;
-	}while(elm = elm.offsetParent);
+	} while(elm = elm.offsetParent);
 	
 	return offset;
 }

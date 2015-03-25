@@ -9,7 +9,7 @@ var BattleScene = function(game, id) {
 
 	this.isDrawing = false;
 
-	this.player = new Trainer([0, 9, 14]);
+	this.player = new Trainer([0, 9, 14], true);
 
 	// Foe
 	var foesTeam = [];
@@ -26,10 +26,12 @@ var BattleScene = function(game, id) {
 	} while (foesTeam[2] == foesTeam[1]
 		|| foesTeam[2] == foesTeam[0]);
 
-	this.foe = new Trainer(foesTeam);
+	this.foe = new Trainer(foesTeam, false);
 	
-	this.currentEnemyFighter = this.foe.fighters[this.foe.currentFightersEnemyIndex];
-	this.currentPlayerFighter = this.player.fighters[this.player.currentFightersPlayerIndex]; 
+	this.currentEnemyFighter =
+		this.foe.fighters[this.foe.currentFightersEnemyIndex];
+	this.currentPlayerFighter =
+		this.player.fighters[this.player.currentFightersPlayerIndex]; 
 
 	// Clamps
 	this.clampPoints = [new Point(100, 100), new Point(100, 500),
@@ -72,69 +74,36 @@ BattleScene.prototype.getElementFromDraw = function() {
 };
 
 BattleScene.prototype.checkPossibleCast = function(currentElement) {
-	var currentFighter = this.player.fighters[this.player.currentFightersPlayerIndex]; 
-	var currentWeapon = currentFighter.weapons[currentFighter.selectedWeaponIndex];
+	var currentFighter =
+		this.player.fighters[this.player.currentFightersPlayerIndex]; 
+	var currentWeapon =
+		currentFighter.weapons[currentFighter.selectedWeaponIndex];
 
-	var spellIsAvailable = false;
+	var spellIsPossible = false;
 	for (var i = 0; i < 2; ++i) {
-		if (currentElement == currentWeapon.spells[i].element) {
-			spellIsAvailable = true;
+		if (currentElement == currentWeapon.availableElements[i]) {
+			spellIsPossible = true;
 		}
 	}
 	
-	return spellIsAvailable;
+	return spellIsPossible;
 };
 
-BattleScene.prototype.cast = function(currentElement) {
-	var multiplicator = 1;
-	if (currentElement == this.currentEnemyFighter.weakness) {
-		multiplicator = 1.5;
-	}
-	else if (currentElement == this.currentEnemyFighter.toughness) {
-		multiplicator = 0.5;
-	}
-	
-	this.currentEnemyFighter.hp =
-		Math.max(0, this.currentEnemyFighter.hp -
-		(this.currentPlayerFighter.power * multiplicator));
-	console.log(this.currentEnemyFighter.hp);
-	if (this.currentEnemyFighter.hp == 0) {
-		++this.foe.currentFightersEnemyIndex;
-		if(this.foe.currentFightersEnemyIndex < 3) {		
-			this.currentEnemyFighter = this.foe.fighters[this.foe.currentFightersEnemyIndex];
-			console.log("il est mort, au suivant");
-		}
-		else {
-			console.log("j'ai gagné");			
-		}
-	}
+BattleScene.prototype.stockPlayerSpell = function(currentElement) {
+	console.log("Stock player's spell");
+	this.playerSpell = new Spell(currentElement,
+		this.currentPlayerFighter, this.currentEnemyFighter);
 };
 
-BattleScene.prototype.enemyCast = function(currentElement) {
-	console.log("EnemyCast");
-	var multiplicator = 1;
-	if (currentElement == this.currentPlayerFighter.weakness) {
-		multiplicator = 1.5;
-	}
-	else if (currentElement == this.currentPlayerFighter.toughness) {
-		multiplicator = 0.5;
-	}
-	
-	this.currentPlayerFighter.hp = Math.max(0, this.currentPlayerFighter.hp
-		- this.currentEnemyFighter.power * multiplicator);
-	console.log("currentPlayerHP : "+this.currentPlayerFighter.hp);
-	if (this.currentPlayerFighter.hp == 0) {
-		++this.player.currentFightersPlayerIndex;
-		if(this.player.currentFightersPlayerIndex < 3) {		
-			this.currentPlayerFighter =
-				this.player.fighters[this.player.currentFightersPlayerIndex];
-			console.log("j'ai perdu un combattant arg !");
-		}
-		else {
-			console.log("j'ai perdu");
-		}
-	}
-	this.playerCanAttack = true;
+BattleScene.prototype.stockEnemySpell = function() {
+	console.log("Stock enemy's spell");
+	var enemyFighter = this.currentEnemyFighter;
+	var enemyWeapon = enemyFighter.weapons[enemyFighter.selectedWeaponIndex];
+	var rngIndex = getRandomInt(0, 2);
+	var currentElement = enemyWeapon.availableElements[rngIndex];
+
+	this.enemySpell = new Spell(currentElement,
+		this.currentEnemyFighter, this.currentPlayerFighter);
 }
 
 BattleScene.prototype.update = function(timeData) {
@@ -190,14 +159,18 @@ BattleScene.prototype.tryToCast = function() {
 	var currentElement = this.getElementFromDraw();
 	var canCast = this.checkPossibleCast(currentElement);
 	
-	if (canCast) {
-		this.cast(currentElement);
-	}
-	else {
+	this.resetDraw();
+	if (!canCast) {
 		console.log("You can't use this element with your current weapon.");
+		return;
 	}
 
-	this.resetDraw();
+	this.stockPlayerSpell(currentElement);
+	this.stockEnemySpell();
+
+	this.sortSpellsBySpeed();
+
+	this.battlePhase();
 };
 
 BattleScene.prototype.resetDraw = function() {
@@ -206,5 +179,48 @@ BattleScene.prototype.resetDraw = function() {
 
 	for (var i = 0; i < this.clampPoints.length; ++i) {
 		this.clampPoints[i].active = false;
+	}
+};
+
+BattleScene.prototype.sortSpellsBySpeed = function() {
+	this.spellsToCast = [];
+
+	if (this.currentPlayerFighter.speed > this.currentEnemyFighter.speed) {
+		this.spellsToCast[0] = this.playerSpell;
+		this.spellsToCast[1] = this.enemySpell;
+	}
+	else if (this.currentPlayerFighter.speed < this.currentEnemyFighter.speed) {
+		this.spellsToCast[0] = this.enemySpell;
+		this.spellsToCast[1] = this.playerSpell;
+	}
+	// Same speed
+	else {
+		var rng = getRandomInt(0, 2);
+		if (rng % 2 == 1) {
+		this.spellsToCast[0] = this.playerSpell;
+		this.spellsToCast[1] = this.enemySpell;
+		}
+		else {
+		this.spellsToCast[0] = this.enemySpell;
+		this.spellsToCast[1] = this.playerSpell;
+		}
+	}
+};
+
+BattleScene.prototype.battlePhase = function() {
+	var spellsToCastCount = this.spellsToCast.length;
+	var deadTarget = null;
+
+	for (var i = 0; i < spellsToCastCount; ++i) {
+		var targetIsAlive = this.spellsToCast[i].cast();
+
+		if (!targetIsAlive) {
+			deadTarget = this.spellsToCast[i].target;
+			break;
+		}
+	}
+
+	if (deadTarget != null) {
+		console.log(deadTarget.name + " is dead, must change.");
 	}
 };

@@ -1,30 +1,40 @@
+WeaponType = {
+	NONE: -1,
+	AXE: 1,
+	BOW: 2,
+	DAGGER: 3,
+	ORB: 4,
+	STAFF: 5,
+	SWORD: 6
+};
+
 var Weapon = function (type) {
 	this.type = type;
 
-	this.spells = [];
+	this.availableElements = [];
 
-	if (type == "Axe") {
-		this.spells[0] = new Spell(Element.FIRE);
-		this.spells[1] = new Spell(Element.EARTH);
+	if (type == WeaponType.AXE) {
+		this.availableElements[0] = Element.FIRE;
+		this.availableElements[1] = Element.EARTH;
 	}
-	else if (type == "Bow") {
-		this.spells[0] = new Spell(Element.FIRE);
-		this.spells[1] = new Spell(Element.WIND);
+	else if (type == WeaponType.BOW) {
+		this.availableElements[0] = Element.FIRE;
+		this.availableElements[1] = Element.WIND;
 	}
-	else if (type == "Dagger") {
-		this.spells[1] = new Spell(Element.EARTH);
-		this.spells[0] = new Spell(Element.WIND);
+	else if (type == WeaponType.DAGGER) {
+		this.availableElements[1] = Element.EARTH;
+		this.availableElements[0] = Element.WIND;
 	}
-	else if (type == "Orb") {
-		this.spells[0] = new Spell(Element.WATER);
-		this.spells[1] = new Spell(Element.WIND);
+	else if (type == WeaponType.ORB) {
+		this.availableElements[0] = Element.WATER;
+		this.availableElements[1] = Element.WIND;
 	}
-	else if (type == "Staff") {
-		this.spells[0] = new Spell(Element.EARTH);
-		this.spells[1] = new Spell(Element.WATER);
+	else if (type == WeaponType.STAFF) {
+		this.availableElements[0] = Element.EARTH;
+		this.availableElements[1] = Element.WATER;
 	}
-	else if (type == "Sword") {
-		this.spells[0] = new Spell(Element.FIRE);
-		this.spells[1] = new Spell(Element.WATER);
+	else if (type == WeaponType.SWORD) {
+		this.availableElements[0] = Element.FIRE;
+		this.availableElements[1] = Element.WATER;
 	}
 };
