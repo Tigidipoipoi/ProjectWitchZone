@@ -23,14 +23,19 @@ Spell.prototype.computeDamages = function() {
 Spell.prototype.cast = function() {
 	this.target.hp -= this.damages;
 	var targetIsAlive = this.target.hp > 0;
+	console.log(this.target.name
+		+ (this.target.isInPlayerTeam ? "" : " foe")
+		+ " has lost " + this.damages + "HP.");
 
 	if (targetIsAlive) {
-		console.log(this.target.name + 
-			(this.target.isInPlayerTeam ? "" : " foe")
+		console.log(this.target.name
+			+ (this.target.isInPlayerTeam ? "" : " foe")
 			+ " has " + this.target.hp + "HP remaining.");
 	}
 	else {
-		console.log(this.target.name + " is defeated.");
+		console.log(this.target.name
+			+ (this.target.isInPlayerTeam ? "" : " foe")
+			+ " is defeated.");
 	}
 
 	return targetIsAlive;

@@ -27,11 +27,6 @@ var BattleScene = function(game, id) {
 		|| foesTeam[2] == foesTeam[0]);
 
 	this.foe = new Trainer(foesTeam, false);
-	
-	this.currentEnemyFighter =
-		this.foe.fighters[this.foe.currentFightersEnemyIndex];
-	this.currentPlayerFighter =
-		this.player.fighters[this.player.currentFightersPlayerIndex]; 
 
 	// Clamps
 	this.clampPoints = [new Point(100, 100), new Point(100, 500),
@@ -75,7 +70,7 @@ BattleScene.prototype.getElementFromDraw = function() {
 
 BattleScene.prototype.checkPossibleCast = function(currentElement) {
 	var currentFighter =
-		this.player.fighters[this.player.currentFightersPlayerIndex]; 
+		this.player.fighters[this.player.currentFighterIndex]; 
 	var currentWeapon =
 		currentFighter.weapons[currentFighter.selectedWeaponIndex];
 
@@ -90,20 +85,21 @@ BattleScene.prototype.checkPossibleCast = function(currentElement) {
 };
 
 BattleScene.prototype.stockPlayerSpell = function(currentElement) {
-	console.log("Stock player's spell");
-	this.playerSpell = new Spell(currentElement,
-		this.currentPlayerFighter, this.currentEnemyFighter);
+	var playerFighter =
+		this.player.fighters[this.player.currentFighterIndex];
+	var foeFighter = this.foe.fighters[this.foe.currentFighterIndex];
+
+	this.playerSpell = new Spell(currentElement, playerFighter, foeFighter);
 };
 
-BattleScene.prototype.stockEnemySpell = function() {
-	console.log("Stock enemy's spell");
-	var enemyFighter = this.currentEnemyFighter;
-	var enemyWeapon = enemyFighter.weapons[enemyFighter.selectedWeaponIndex];
+BattleScene.prototype.stockFoeSpell = function() {
+	var playerFighter = this.player.fighters[this.player.currentFighterIndex];
+	var foeFighter = this.foe.fighters[this.foe.currentFighterIndex];
+	var foeWeapon = foeFighter.weapons[foeFighter.selectedWeaponIndex];
 	var rngIndex = getRandomInt(0, 2);
-	var currentElement = enemyWeapon.availableElements[rngIndex];
+	var currentElement = foeWeapon.availableElements[rngIndex];
 
-	this.enemySpell = new Spell(currentElement,
-		this.currentEnemyFighter, this.currentPlayerFighter);
+	this.foeSpell = new Spell(currentElement, foeFighter, playerFighter);
 }
 
 BattleScene.prototype.update = function(timeData) {
@@ -166,7 +162,7 @@ BattleScene.prototype.tryToCast = function() {
 	}
 
 	this.stockPlayerSpell(currentElement);
-	this.stockEnemySpell();
+	this.stockFoeSpell();
 
 	this.sortSpellsBySpeed();
 
@@ -184,13 +180,15 @@ BattleScene.prototype.resetDraw = function() {
 
 BattleScene.prototype.sortSpellsBySpeed = function() {
 	this.spellsToCast = [];
+	var foeFighter = this.foe.fighters[this.foe.currentFighterIndex];
+	var playerFighter = this.player.fighters[this.player.currentFighterIndex];
 
-	if (this.currentPlayerFighter.speed > this.currentEnemyFighter.speed) {
+	if (playerFighter.speed > foeFighter.speed) {
 		this.spellsToCast[0] = this.playerSpell;
-		this.spellsToCast[1] = this.enemySpell;
+		this.spellsToCast[1] = this.foeSpell;
 	}
-	else if (this.currentPlayerFighter.speed < this.currentEnemyFighter.speed) {
-		this.spellsToCast[0] = this.enemySpell;
+	else if (playerFighter.speed < foeFighter.speed) {
+		this.spellsToCast[0] = this.foeSpell;
 		this.spellsToCast[1] = this.playerSpell;
 	}
 	// Same speed
@@ -198,10 +196,10 @@ BattleScene.prototype.sortSpellsBySpeed = function() {
 		var rng = getRandomInt(0, 2);
 		if (rng % 2 == 1) {
 		this.spellsToCast[0] = this.playerSpell;
-		this.spellsToCast[1] = this.enemySpell;
+		this.spellsToCast[1] = this.foeSpell;
 		}
 		else {
-		this.spellsToCast[0] = this.enemySpell;
+		this.spellsToCast[0] = this.foeSpell;
 		this.spellsToCast[1] = this.playerSpell;
 		}
 	}
@@ -212,6 +210,8 @@ BattleScene.prototype.battlePhase = function() {
 	var deadTarget = null;
 
 	for (var i = 0; i < spellsToCastCount; ++i) {
+		console.log(this.spellsToCast[i].caster.isInPlayerTeam
+			? "Your turn: " : "Foe's turn: ");
 		var targetIsAlive = this.spellsToCast[i].cast();
 
 		if (!targetIsAlive) {
@@ -221,6 +221,28 @@ BattleScene.prototype.battlePhase = function() {
 	}
 
 	if (deadTarget != null) {
-		console.log(deadTarget.name + " is dead, must change.");
+		this.changeCurrentFighter(deadTarget.isInPlayerTeam
+			? this.player : this.foe);
+	}
+};
+
+BattleScene.prototype.changeCurrentFighter = function(trainer) {
+	var currentFighter = trainer.isPlayer
+		? this.player.fighters[this.player.currentFighterIndex]
+		: this.foe.fighters[this.foe.currentFighterIndex];
+	var oldFighterName = currentFighter.name;
+
+	++trainer.currentFighterIndex;
+	if(trainer.currentFighterIndex < 3) {		
+		currentFighter = trainer.fighters[trainer.currentFighterIndex];
+		console.log("Changing " + oldFighterName
+			+ (trainer.isPlayer ? "" : " foe")
+			+ " fighter for " + currentFighter.name);
+	}
+	// No more fighters in team
+	else {
+		console.log(trainer.isPlayer
+			? "You have lost..."
+			: "You have won!");
 	}
 };
