@@ -23,7 +23,7 @@ var Game = function() {
 		self.mainLoop();
 		requestAnimationFrame(loop);
 	});
-	
+
 	this.canvas.addEventListener("click", function(e) {
 		var offset = getOffset(self.canvas);
 		self.onClick(

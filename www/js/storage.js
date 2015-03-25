@@ -1,9 +1,4 @@
-storage = 
-{
-	/*putInt,
-	getInt,
-	putObject,
-	getObject,*/
+storage = {
 	putString:function(nameOfStorage,e){
 		localStorage[nameOfStorage] = e;
 	},
@@ -30,7 +25,7 @@ storage =
 	getBool:function(nameOfStorage){
 		var currentValue = localStorage[nameOfStorage];
 		currentValue = currentValue.toLowerCase();
-		if (currentValue != ("false" &&"0"& "")) 
+		if (currentValue != ("false" &&"0"& ""))
 			return true;
 		else
 			return false;

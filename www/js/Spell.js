@@ -14,7 +14,7 @@ Spell.prototype.computeDamages = function() {
 	else if (this.element == this.target.toughness) {
 		multiplicator = 0.5;
 	}
-	
+
 	var damages = (this.caster.power * multiplicator);
 
 	return damages;

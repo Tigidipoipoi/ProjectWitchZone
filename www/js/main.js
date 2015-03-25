@@ -5,14 +5,6 @@ window.addEventListener("load", function () {
 	console.log("Page chargée en " + (t2 - t).toString() + " ms.");
 
 	game = new Game();
-
-	/*for (var i = 0; i < 4; ++i) {
-		var temp = document.getElementById("cast-point" + i);
-		temp.addEventListener("touchstart", function(e) {
-	    	e.preventDefault();
-	    	console.log("Pourquoi ça marche pas ?");
-		}, false)
-	}*/
 });
 
 play = function () {
@@ -29,14 +21,13 @@ options = function () {
 };
 
 if ('ontouchstart' in document.documentElement) {
-  console.log("AZERTY");
+	console.log("Touch inputs are detected!");
 }
 
 // Max excluded
 function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
+	return Math.floor(Math.random() * (max - min)) + min;
 }
-
 
 function getOffset(elm) {
 	var offset = {
@@ -48,6 +39,6 @@ function getOffset(elm) {
 		offset.left += elm.offsetLeft;
 		offset.top += elm.offsetTop;
 	} while(elm = elm.offsetParent);
-	
+
 	return offset;
 }

@@ -70,7 +70,7 @@ BattleScene.prototype.getElementFromDraw = function() {
 
 BattleScene.prototype.checkPossibleCast = function(currentElement) {
 	var currentFighter =
-		this.player.fighters[this.player.currentFighterIndex]; 
+		this.player.fighters[this.player.currentFighterIndex];
 	var currentWeapon =
 		currentFighter.weapons[currentFighter.selectedWeaponIndex];
 
@@ -80,7 +80,7 @@ BattleScene.prototype.checkPossibleCast = function(currentElement) {
 			spellIsPossible = true;
 		}
 	}
-	
+
 	return spellIsPossible;
 };
 
@@ -102,21 +102,6 @@ BattleScene.prototype.stockFoeSpell = function() {
 	this.foeSpell = new Spell(currentElement, foeFighter, playerFighter);
 }
 
-BattleScene.prototype.update = function(timeData) {
-};
-
-BattleScene.prototype.render = function(g) {
-	g.save();
-		if (this.background.complete) {
-			g.translate(-this.x, -this.y);
-			g.drawImage(this.background, 0, 0);
-		}
-		for(var i = 0 ; i < this.clampPoints.length; ++i) {
-			this.clampPoints[i].render(g);
-		}
-	g.restore();
-};
-
 function drawLine(firstPoint, secondPoint) {
 	var canvas = document.getElementById('game');
 	var g = canvas.getContext('2d');
@@ -124,18 +109,18 @@ function drawLine(firstPoint, secondPoint) {
 	g.moveTo(20,100);
 	g.lineTo(200,10);
 	g.strokeStyle = "black";
-	g.stroke(); 
+	g.stroke();
 	g.closePath();
-}  
+}
 
 BattleScene.prototype.onClick = function(x, y) {
 	var activeClampPoints = 0;
 
 	for (var i = 0; i < this.clampPoints.length; ++i) {
-		if (Math.pow(this.clampPoints[i].x - x, 2) 
+		if (Math.pow(this.clampPoints[i].x - x, 2)
 			+ Math.pow(this.clampPoints[i].y - y, 2) < Math.pow(40, 2)) {
 			var tPtsLength = this.touchedPoints.length;
-			
+
 			// We don't add last touched and previous last touched
 			if (this.touchedPoints[tPtsLength - 1] != this.clampPoints[i]
 				&& this.touchedPoints[tPtsLength - 2] != this.clampPoints[i]) {
@@ -154,7 +139,7 @@ BattleScene.prototype.onClick = function(x, y) {
 BattleScene.prototype.tryToCast = function() {
 	var currentElement = this.getElementFromDraw();
 	var canCast = this.checkPossibleCast(currentElement);
-	
+
 	this.resetDraw();
 	if (!canCast) {
 		console.log("You can't use this element with your current weapon.");
@@ -203,6 +188,9 @@ BattleScene.prototype.sortSpellsBySpeed = function() {
 		this.spellsToCast[1] = this.playerSpell;
 		}
 	}
+
+	delete this.foeSpell;
+	delete this.playerSpell;
 };
 
 BattleScene.prototype.battlePhase = function() {
@@ -219,6 +207,7 @@ BattleScene.prototype.battlePhase = function() {
 			break;
 		}
 	}
+	delete this.spellsToCast;
 
 	if (deadTarget != null) {
 		this.changeCurrentFighter(deadTarget.isInPlayerTeam
@@ -233,7 +222,7 @@ BattleScene.prototype.changeCurrentFighter = function(trainer) {
 	var oldFighterName = currentFighter.name;
 
 	++trainer.currentFighterIndex;
-	if(trainer.currentFighterIndex < 3) {		
+	if(trainer.currentFighterIndex < 3) {
 		currentFighter = trainer.fighters[trainer.currentFighterIndex];
 		console.log("Changing " + oldFighterName
 			+ (trainer.isPlayer ? "" : " foe")
@@ -245,4 +234,19 @@ BattleScene.prototype.changeCurrentFighter = function(trainer) {
 			? "You have lost..."
 			: "You have won!");
 	}
+};
+
+BattleScene.prototype.update = function(timeData) {
+};
+
+BattleScene.prototype.render = function(g) {
+	g.save();
+		if (this.background.complete) {
+			g.translate(-this.x, -this.y);
+			g.drawImage(this.background, 0, 0);
+		}
+		for(var i = 0 ; i < this.clampPoints.length; ++i) {
+			this.clampPoints[i].render(g);
+		}
+	g.restore();
 };
