@@ -42,3 +42,14 @@ function getOffset(elm) {
 
 	return offset;
 }
+
+function drawLine(firstPoint, secondPoint) {
+	var canvas = document.getElementById('game');
+	var g = canvas.getContext('2d');
+	g.beginPath();
+	g.moveTo(firstPoint.x, firstPoint.y);
+	g.lineTo(secondPoint.x, secondPoint.y);
+	g.strokeStyle = "black";
+	g.stroke();
+	g.closePath();
+}

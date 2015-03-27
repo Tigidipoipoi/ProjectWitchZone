@@ -30,6 +30,12 @@ var Game = function() {
 			(e.clientX - offset.left),
 			(e.clientY - offset.top));
 	});
+	this.mousePosition = {};
+	this.canvas.addEventListener("mousemove", function(e) {
+		var offset = getOffset(self.canvas);
+		self.mousePosition.x = e.clientX - offset.left;
+		self.mousePosition.y = e.clientY - offset.top;
+	});
 };
 Game.WIDTH = 800;
 Game.HEIGHT = 600;

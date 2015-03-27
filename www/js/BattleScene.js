@@ -100,18 +100,7 @@ BattleScene.prototype.stockFoeSpell = function() {
 	var currentElement = foeWeapon.availableElements[rngIndex];
 
 	this.foeSpell = new Spell(currentElement, foeFighter, playerFighter);
-}
-
-function drawLine(firstPoint, secondPoint) {
-	var canvas = document.getElementById('game');
-	var g = canvas.getContext('2d');
-	g.beginPath();
-	g.moveTo(20,100);
-	g.lineTo(200,10);
-	g.strokeStyle = "black";
-	g.stroke();
-	g.closePath();
-}
+};
 
 BattleScene.prototype.onClick = function(x, y) {
 	var activeClampPoints = 0;
@@ -224,9 +213,8 @@ BattleScene.prototype.changeCurrentFighter = function(trainer) {
 	++trainer.currentFighterIndex;
 	if(trainer.currentFighterIndex < 3) {
 		currentFighter = trainer.fighters[trainer.currentFighterIndex];
-		console.log("Changing " + oldFighterName
-			+ (trainer.isPlayer ? "" : " foe")
-			+ " fighter for " + currentFighter.name);
+		console.log((trainer.isPlayer ? "You replaced " : "Foe replaced ")
+			+ oldFighterName + " by " + currentFighter.name);
 	}
 	// No more fighters in team
 	else {
@@ -247,6 +235,24 @@ BattleScene.prototype.render = function(g) {
 		}
 		for(var i = 0 ; i < this.clampPoints.length; ++i) {
 			this.clampPoints[i].render(g);
+		}
+
+		// Renders the draw
+		var touchedPointsLength = this.touchedPoints.length;
+		if (touchedPointsLength > 0) {
+			var currentIndex = touchedPointsLength - 1;
+			var previousIndex = currentIndex - 1;
+
+			while (previousIndex >= 0) {
+				drawLine(this.touchedPoints[previousIndex],
+					this.touchedPoints[currentIndex]);
+
+				--currentIndex;
+				--previousIndex;
+			}
+
+			drawLine(this.touchedPoints[touchedPointsLength - 1],
+					this.game.mousePosition);
 		}
 	g.restore();
 };
