@@ -8,7 +8,7 @@ var BattleScene = function(game, id) {
 
 	this.isDrawing = false;
 
-	this.player = new Trainer([0, 9, 14], true);
+	this.player = new Trainer([1, 9, 14], true);
 
 	// Foe
 	var foesTeam = [];
@@ -75,7 +75,7 @@ BattleScene.prototype.checkPossibleCast = function(currentElement) {
 	var currentFighter =
 		this.player.fighters[this.player.currentFighterIndex];
 	var currentWeapon =
-		currentFighter.weapons[currentFighter.selectedWeaponIndex];
+		currentFighter.weapons[currentFighter.currentWeaponIndex];
 
 	var spellIsPossible = false;
 	for (var i = 0; i < 2; ++i) {
@@ -98,7 +98,7 @@ BattleScene.prototype.stockPlayerSpell = function(currentElement) {
 BattleScene.prototype.stockFoeSpell = function() {
 	var playerFighter = this.player.fighters[this.player.currentFighterIndex];
 	var foeFighter = this.foe.fighters[this.foe.currentFighterIndex];
-	var foeWeapon = foeFighter.weapons[foeFighter.selectedWeaponIndex];
+	var foeWeapon = foeFighter.weapons[foeFighter.currentWeaponIndex];
 	var rngIndex = getRandomInt(0, 2);
 	var currentElement = foeWeapon.availableElements[rngIndex];
 
@@ -108,30 +108,33 @@ BattleScene.prototype.stockFoeSpell = function() {
 BattleScene.prototype.onClick = function(x, y) {
 	var activeClampPoints = 0;
 
-	// Checking if we have clicked on incantation points
-	for (var i = 0; i < this.clampPoints.length; ++i) {
-		if (this.clampPoints[i].doesCollide(x, y)) {
-			var tPtsLength = this.touchedPoints.length;
+	if (this.player.fighters[this.player.currentFighterIndex].currentWeaponIndex
+		> -1) {
+		// Checking if we have clicked on incantation points
+		for (var i = 0; i < this.clampPoints.length; ++i) {
+			if (this.clampPoints[i].doesCollide(x, y)) {
+				var tPtsLength = this.touchedPoints.length;
 
-			// We don't add last touched and previous last touched
-			if (this.touchedPoints[tPtsLength - 1] != this.clampPoints[i]
-				&& this.touchedPoints[tPtsLength - 2] != this.clampPoints[i]) {
-				this.clampPoints[i].active = true;
-				this.touchedPoints[tPtsLength] = this.clampPoints[i];
+				// We don't add last touched and previous last touched
+				if (this.touchedPoints[tPtsLength - 1] != this.clampPoints[i]
+					&& this.touchedPoints[tPtsLength - 2] != this.clampPoints[i]) {
+					this.clampPoints[i].active = true;
+					this.touchedPoints[tPtsLength] = this.clampPoints[i];
 
-				if (tPtsLength == 3) {
-					this.tryToCast();
+					if (tPtsLength == 3) {
+						this.tryToCast();
+					}
+					break;
 				}
-				break;
 			}
-		}
+		}	
 	}
-
+	
 	// Checking for the weapon selection
 	for (var i = 0; i < this.weaponSelectionSlots.length; ++i) {
 		if (this.weaponSelectionSlots[i].doesCollide(x, y)) {
 			this.player.fighters[this.player.currentFighterIndex]
-				.selectedWeaponIndex = i;
+				.currentWeaponIndex = i;
 		}
 	}
 };
@@ -276,10 +279,8 @@ BattleScene.prototype.render = function(g) {
 					this.game.mousePosition);
 		}
 
-		// Renders the fighters
-		currentFighter.render(g);
-		var currentFoeFighter =
-			this.foe.fighters[this.foe.currentFighterIndex];
-		currentFoeFighter.render(g);
+		// Renders the trainers
+		this.player.render(g);
+		this.foe.render(g);
 	g.restore();
 };

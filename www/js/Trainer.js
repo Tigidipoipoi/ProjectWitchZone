@@ -8,3 +8,11 @@ var Trainer = function(teamIds, isPlayer) {
 
 	this.currentFighterIndex = 0;
 };
+
+Trainer.prototype.render = function(g) {
+	g.save();
+		// Renders the current fighter
+		var currentFighter = this.fighters[this.currentFighterIndex];
+		currentFighter.render(g);
+	g.restore();
+};
