@@ -2,8 +2,7 @@ var BattleScene = function(game, id) {
 	var self = this;
 	this.game = game;
 
-	this.background = new Image();
-	this.background.src = "img/IncantationCircle.png";
+	this.background = this.game.assetManager.getImage("incantation-circle");
 
 	this.id = id;
 
@@ -29,11 +28,15 @@ var BattleScene = function(game, id) {
 	this.foe = new Trainer(foesTeam, false);
 
 	// Clamps
-	this.clampPoints = [new Point(100, 100), new Point(100, 500),
-		new Point(500, 500), new Point(500, 100)];
+	this.clampPoints = [new Point(100, 100, 80), new Point(100, 500, 80),
+		new Point(500, 500, 80), new Point(500, 100, 80)];
 	for (var i = 0; i < this.clampPoints.length; ++i) {
 		this.clampPoints[i].id = i;
 	}
+
+	// weapon selection slot
+	this.weaponSelectionSlots = [new Point(700, 150, 120),
+		new Point(700, 450, 120)];
 
 	this.touchedPoints = [];
 
@@ -105,9 +108,9 @@ BattleScene.prototype.stockFoeSpell = function() {
 BattleScene.prototype.onClick = function(x, y) {
 	var activeClampPoints = 0;
 
+	// Checking if we have clicked on incantation points
 	for (var i = 0; i < this.clampPoints.length; ++i) {
-		if (Math.pow(this.clampPoints[i].x - x, 2)
-			+ Math.pow(this.clampPoints[i].y - y, 2) < Math.pow(40, 2)) {
+		if (this.clampPoints[i].doesCollide(x, y)) {
 			var tPtsLength = this.touchedPoints.length;
 
 			// We don't add last touched and previous last touched
@@ -121,6 +124,14 @@ BattleScene.prototype.onClick = function(x, y) {
 				}
 				break;
 			}
+		}
+	}
+
+	// Checking for the weapon selection
+	for (var i = 0; i < this.weaponSelectionSlots.length; ++i) {
+		if (this.weaponSelectionSlots[i].doesCollide(x, y)) {
+			this.player.fighters[this.player.currentFighterIndex]
+				.selectedWeaponIndex = i;
 		}
 	}
 };
@@ -233,8 +244,18 @@ BattleScene.prototype.render = function(g) {
 			g.translate(-this.x, -this.y);
 			g.drawImage(this.background, 0, 0);
 		}
+		var currentFighter =
+			this.player.fighters[this.player.currentFighterIndex];
+
+		// Renders the clamp points
 		for(var i = 0 ; i < this.clampPoints.length; ++i) {
 			this.clampPoints[i].render(g);
+		}
+
+		// Renders the weapon selection
+		for (var i = 0; i < this.weaponSelectionSlots.length; ++i) {
+			this.weaponSelectionSlots[i].image = currentFighter.weapons[i].image;
+			this.weaponSelectionSlots[i].render(g);
 		}
 
 		// Renders the draw
@@ -254,5 +275,11 @@ BattleScene.prototype.render = function(g) {
 			drawLine(this.touchedPoints[touchedPointsLength - 1],
 					this.game.mousePosition);
 		}
+
+		// Renders the fighters
+		currentFighter.render(g);
+		var currentFoeFighter =
+			this.foe.fighters[this.foe.currentFighterIndex];
+		currentFoeFighter.render(g);
 	g.restore();
 };

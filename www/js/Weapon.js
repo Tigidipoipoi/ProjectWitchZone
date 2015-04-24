@@ -16,25 +16,31 @@ var Weapon = function (type) {
 	if (type == WeaponType.AXE) {
 		this.availableElements[0] = Element.FIRE;
 		this.availableElements[1] = Element.EARTH;
+		this.image = game.assetManager.getImage("axe");
 	}
 	else if (type == WeaponType.BOW) {
 		this.availableElements[0] = Element.FIRE;
 		this.availableElements[1] = Element.WIND;
+		this.image = game.assetManager.getImage("bow");
 	}
 	else if (type == WeaponType.DAGGER) {
 		this.availableElements[1] = Element.EARTH;
 		this.availableElements[0] = Element.WIND;
+		this.image = game.assetManager.getImage("dagger");
 	}
 	else if (type == WeaponType.ORB) {
 		this.availableElements[0] = Element.WATER;
 		this.availableElements[1] = Element.WIND;
+		this.image = game.assetManager.getImage("orb");
 	}
 	else if (type == WeaponType.STAFF) {
 		this.availableElements[0] = Element.EARTH;
 		this.availableElements[1] = Element.WATER;
+		this.image = game.assetManager.getImage("staff");
 	}
 	else if (type == WeaponType.SWORD) {
 		this.availableElements[0] = Element.FIRE;
 		this.availableElements[1] = Element.WATER;
+		this.image = game.assetManager.getImage("sword");
 	}
 };

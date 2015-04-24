@@ -112,6 +112,4 @@ Questions à poser
 	Comment adapter la résolution d'écran
 
 ToDo
-	Pouvoir changer de combattant à la mort de l'actuelle
-	Calcul de l'ordre de passage
-	Calcul des dommages
+	Pouvoir changer de combattant à la mort de l'actuel

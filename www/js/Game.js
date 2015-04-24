@@ -17,7 +17,13 @@ var Game = function() {
 	this.graphics.height = this.canvas.height;
 	this.graphics.timeData = this.timeData;
 
-	this.scene = new BattleScene(this, 0);
+	this.assetManager = new AssetManager();
+	this.assetManager.addLoadingListener(function() {
+		self.onGameLoaded();
+	});
+	this.assetManager.startLoading(imageList, soundList);
+
+	// this.scene = new BattleScene(this, 0);
 
 	requestAnimationFrame(function loop() {
 		self.mainLoop();
@@ -41,6 +47,13 @@ Game.WIDTH = 800;
 Game.HEIGHT = 600;
 Game.EPSILON = 0.001;
 
+Game.prototype.onGameLoaded = function() {
+	self = this;
+
+	console.log("Game loaded!");
+	this.scene = new BattleScene(this, 0);
+};
+
 Game.prototype.onClick = function(x, y) {
 	this.scene.onClick(x, y);
 };
@@ -57,7 +70,9 @@ Game.prototype.mainLoop = function() {
 };
 
 Game.prototype.update = function(timeData) {
-	this.scene.update(timeData);
+	if (this.scene) {
+		this.scene.update(timeData);
+	}
 };
 
 Game.prototype.render = function(g) {
@@ -67,5 +82,37 @@ Game.prototype.render = function(g) {
 	g.fillStyle = "salmon";
 	g.fillRect(0, 0, g.width, g.height);
 
-	this.scene.render(g);
+	if (this.scene) {
+		this.scene.render(g);
+	}
+	// else {
+	// 	g.save();
+	// 		// Loading text
+	// 		g.font = "bold 30px sans-serif";
+	// 		g.fillStyle = "black";
+	// 		g.textAlign = "center";
+	// 		g.translate(g.width / this.scale / 2,
+	// 			g.height / this.scale / 2);
+	// 		g.fillText("Chargement...", 0, -20);
+
+	// 		// Loading bar
+	// 		var progress = this.getLoadingProgress();
+	// 		g.translate(-Game.MAX_LOAD_WIDTH / 2, 0);
+	// 		g.strokeStyle = "black";
+	// 		g.strokeRect(0, 0, Game.MAX_LOAD_WIDTH, Game.LOAD_HEIGHT);
+	// 		g.fillStyle = "green";
+	// 		g.fillRect(0, 0, Game.MAX_LOAD_WIDTH * progress,
+	// 			Game.LOAD_HEIGHT);
+	// 	g.restore();
+	// }
 };
+
+Game.prototype.getLoadingProgress = function() {
+	var progress =
+		this.assetManager.assetLoadedCount / this.assetManager.assetCount;
+
+	return progress;
+};
+
+Game.MAX_LOAD_WIDTH = 300;
+Game.LOAD_HEIGHT = 10;

@@ -191,7 +191,7 @@ var Fighter = function (id, isInPlayerTeam) {
 		this.weapons[0] = new Weapon(WeaponType.STAFF);
 		this.weapons[1] = new Weapon(WeaponType.SWORD);
 
-		this.hp = 15;
+		this.hp = Fighter.MAX_HP;
 		this.speed = 15;
 		this.power = 5;
 
@@ -199,5 +199,33 @@ var Fighter = function (id, isInPlayerTeam) {
 		this.toughness = Element.WATER;
 	}
 
+	// -1 if no weapon selected yet
 	this.selectedWeaponIndex = 0;
+};
+Fighter.MAX_HP = 15;
+Fighter.HEALTH_BAR_WIDTH = 100;
+Fighter.HEALTH_BAR_HEIGHT = 10;
+
+Fighter.prototype.render = function(g) {
+	g.save();
+		// LifeBar
+		if (this.isInPlayerTeam) {
+			g.translate(Game.WIDTH * 0.75 - Fighter.HEALTH_BAR_WIDTH,
+				Game.HEIGHT - Fighter.HEALTH_BAR_HEIGHT * 2);			
+		}
+		else {
+			g.translate(Fighter.HEALTH_BAR_WIDTH * 0.1, Fighter.HEALTH_BAR_HEIGHT);			
+		}
+		g.strokeStyle = "black";
+		g.strokeRect(0, 0, Fighter.HEALTH_BAR_WIDTH, Fighter.HEALTH_BAR_HEIGHT);
+		g.fillStyle = "green";
+		g.fillRect(0, 0, Fighter.HEALTH_BAR_WIDTH * (this.hp / Fighter.MAX_HP),
+			Fighter.HEALTH_BAR_HEIGHT);
+
+		// SelectedWeapon
+		// if (this.selectedWeaponIndex > -1) {
+
+		// }
+
+	g.restore();
 };

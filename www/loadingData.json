@@ -1,0 +1,2 @@
+var imageList = {"axe":"img\/axe.png","bow":"img\/bow.png","dagger":"img\/dagger.png","incantation-circle":"img\/incantation-circle.png","orb":"img\/orb.png","staff":"img\/staff.png","sword":"img\/sword.png"};
+var soundList = null;
