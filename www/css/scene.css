@@ -1,40 +1,17 @@
-.scene {
+ul#fighter-list {
 	position: absolute;
-	margin-top: -1310px;
-	margin-left: -3280px;
-
-	background-image: url(../img/forest.jpg);
-	height: 2037px;
-	width: 4096px;
+	top: 0;
+	left: 0;
+	width: 600px;
+	height: 100px;
 }
-
-#player {
-	top: 1740px;
-	left: 3685px;
-}
-
-#enemy1 {
-	top: 1670px;
-	left: 3775px;
-}
-
-#enemy2 {
-	top: 1760px;
-	left: 3835px;
-}
-
-.character {
-	position: absolute;
-}
-
-.samurai {
-	height: 128px;
-	width: 128px;
-	background-image: url(../img/idle-1-2-1.png);
-}
-
-.kankrelat {
-	height: 128px;
-	width: 128px;
-	background-image: url(../img/idle-1.png);
-}
+	li.fighter-selection {
+		float: left;
+		height: 100px;
+		width: 100px;
+		display: block;
+	}
+		li.fighter-selection img {
+			width: 100%;
+			height: 100%;
+		}

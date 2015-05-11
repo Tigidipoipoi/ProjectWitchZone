@@ -1,10 +1,15 @@
-var BattleScene = function(game, id) {
+var BattleScene = function(game) {
 	var self = this;
+
 	this.game = game;
+	this.game.canvas.addEventListener("click", function(e) {
+		var offset = getOffset(self.game.canvas);
+		self.onClick(
+			(e.clientX - offset.left),
+			(e.clientY - offset.top));
+	});
 
 	this.background = this.game.assetManager.getImage("incantation-circle");
-
-	this.id = id;
 
 	this.isDrawing = false;
 
@@ -216,6 +221,10 @@ BattleScene.prototype.battlePhase = function() {
 		this.changeCurrentFighter(deadTarget.isInPlayerTeam
 			? this.player : this.foe);
 	}
+	
+	// Change foe's weapon
+	this.foe.fighters[this.foe.currentFighterIndex]
+		.currentWeaponIndex = getRandomInt(0, 2);
 };
 
 BattleScene.prototype.changeCurrentFighter = function(trainer) {

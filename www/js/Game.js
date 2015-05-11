@@ -23,19 +23,11 @@ var Game = function() {
 	});
 	this.assetManager.startLoading(imageList, soundList);
 
-	// this.scene = new BattleScene(this, 0);
-
 	requestAnimationFrame(function loop() {
 		self.mainLoop();
 		requestAnimationFrame(loop);
 	});
 
-	this.canvas.addEventListener("click", function(e) {
-		var offset = getOffset(self.canvas);
-		self.onClick(
-			(e.clientX - offset.left),
-			(e.clientY - offset.top));
-	});
 	this.mousePosition = {};
 	this.canvas.addEventListener("mousemove", function(e) {
 		var offset = getOffset(self.canvas);
@@ -51,11 +43,9 @@ Game.prototype.onGameLoaded = function() {
 	self = this;
 
 	console.log("Game loaded!");
-	this.scene = new BattleScene(this, 0);
-};
-
-Game.prototype.onClick = function(x, y) {
-	this.scene.onClick(x, y);
+	// Old
+	//this.scene = new BattleScene(this);
+	this.scene = new CharacterScene(this);
 };
 
 Game.prototype.mainLoop = function() {
