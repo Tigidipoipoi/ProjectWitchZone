@@ -6,7 +6,7 @@ ul#fighter-list {
 	height: 273px;
 }
 	li.fighter-selection {
-		border: 3px solid;
+		border: 3px black solid;
 		margin-left: 5px;
 		margin-top: 5px;
 

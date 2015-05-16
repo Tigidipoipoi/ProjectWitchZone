@@ -4,21 +4,12 @@ window.addEventListener("load", function () {
 	t2 = Date.now();
 	console.log("Page chargée en " + (t2 - t).toString() + " ms.");
 
-	game = new Game();
+	document.getElementById("play-button").addEventListener("click", function() {
+		game = new Game();
+		document.getElementById("title-screen").className = "disabled";
+		document.getElementById("fighter-selection-screen").className = "fighter-selection";
+	});
 });
-
-play = function () {
-	console.log("Play!");
-	game.scene = new Scene(game, 1);
-};
-help = function () {
-	console.log("Help");
-	game.scene = new Scene(game, 2);
-};
-options = function () {
-	console.log("Options");
-	game.scene = new Scene(game, 3);
-};
 
 if ('ontouchstart' in document.documentElement) {
 	console.log("Touch inputs are detected!");

@@ -120,6 +120,7 @@ ToDo
 		Affichage stats
 	Combat
 		Elements dispo pour l'arme
+		Finir affichage perso
 	Navigation entre scènes
 		Ecran de fin de bataille
 		Ecran titre
