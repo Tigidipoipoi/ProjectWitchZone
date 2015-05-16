@@ -112,4 +112,15 @@ Questions à poser
 	Comment adapter la résolution d'écran
 
 ToDo
-	Pouvoir changer de combattant à la mort de l'actuel
+	Resize
+		Update CSS for fighter Selection
+	Force to landscape
+	Intégration
+	Selection perso
+		Affichage stats
+	Combat
+		Elements dispo pour l'arme
+	Navigation entre scènes
+		Ecran de fin de bataille
+		Ecran titre
+			Options

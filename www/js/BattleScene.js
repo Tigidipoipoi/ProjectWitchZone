@@ -1,4 +1,4 @@
-var BattleScene = function(game) {
+var BattleScene = function(game, fightersIds) {
 	var self = this;
 
 	this.game = game;
@@ -9,11 +9,12 @@ var BattleScene = function(game) {
 			(e.clientY - offset.top));
 	});
 
+	console.log("Gné ?");
 	this.background = this.game.assetManager.getImage("incantation-circle");
 
 	this.isDrawing = false;
 
-	this.player = new Trainer([1, 9, 14], true);
+	this.player = new Trainer(fightersIds, true);
 
 	// Foe
 	var foesTeam = [];
@@ -45,7 +46,7 @@ var BattleScene = function(game) {
 
 	this.touchedPoints = [];
 
-	sceneDebug = this;
+	debugBattleScene = this;
 };
 
 BattleScene.prototype.getElementFromDraw = function() {
@@ -111,6 +112,9 @@ BattleScene.prototype.stockFoeSpell = function() {
 };
 
 BattleScene.prototype.onClick = function(x, y) {
+	x /= this.game.scale;
+	y /= this.game.scale;
+
 	var activeClampPoints = 0;
 
 	if (this.player.fighters[this.player.currentFighterIndex].currentWeaponIndex
@@ -284,8 +288,10 @@ BattleScene.prototype.render = function(g) {
 				--previousIndex;
 			}
 
-			drawLine(this.touchedPoints[touchedPointsLength - 1],
-					this.game.mousePosition);
+			var scaledMousePos = {};
+			scaledMousePos.x = this.game.mousePosition.x / this.game.scale;
+			scaledMousePos.y = this.game.mousePosition.y / this.game.scale;
+			drawLine(this.touchedPoints[touchedPointsLength - 1], scaledMousePos);
 		}
 
 		// Renders the trainers

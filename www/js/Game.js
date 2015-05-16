@@ -23,6 +23,11 @@ var Game = function() {
 	});
 	this.assetManager.startLoading(imageList, soundList);
 
+	addEventListener("resize", function() {
+		self.onResize();
+	});
+	this.onResize();
+
 	requestAnimationFrame(function loop() {
 		self.mainLoop();
 		requestAnimationFrame(loop);
@@ -43,8 +48,6 @@ Game.prototype.onGameLoaded = function() {
 	self = this;
 
 	console.log("Game loaded!");
-	// Old
-	//this.scene = new BattleScene(this);
 	this.scene = new CharacterScene(this);
 };
 
@@ -72,29 +75,13 @@ Game.prototype.render = function(g) {
 	g.fillStyle = "salmon";
 	g.fillRect(0, 0, g.width, g.height);
 
-	if (this.scene) {
-		this.scene.render(g);
-	}
-	// else {
-	// 	g.save();
-	// 		// Loading text
-	// 		g.font = "bold 30px sans-serif";
-	// 		g.fillStyle = "black";
-	// 		g.textAlign = "center";
-	// 		g.translate(g.width / this.scale / 2,
-	// 			g.height / this.scale / 2);
-	// 		g.fillText("Chargement...", 0, -20);
+	g.save();
+		g.scale(this.scale, this.scale);
 
-	// 		// Loading bar
-	// 		var progress = this.getLoadingProgress();
-	// 		g.translate(-Game.MAX_LOAD_WIDTH / 2, 0);
-	// 		g.strokeStyle = "black";
-	// 		g.strokeRect(0, 0, Game.MAX_LOAD_WIDTH, Game.LOAD_HEIGHT);
-	// 		g.fillStyle = "green";
-	// 		g.fillRect(0, 0, Game.MAX_LOAD_WIDTH * progress,
-	// 			Game.LOAD_HEIGHT);
-	// 	g.restore();
-	// }
+		if (this.scene) {
+			this.scene.render(g);
+		}
+	g.restore();
 };
 
 Game.prototype.getLoadingProgress = function() {
@@ -104,5 +91,18 @@ Game.prototype.getLoadingProgress = function() {
 	return progress;
 };
 
-Game.MAX_LOAD_WIDTH = 300;
-Game.LOAD_HEIGHT = 10;
+Game.prototype.enterBattleScene = function(fightersIds) {
+	document.getElementById("fighter-selection-screen").className = 
+		"fighter-selection disabled";
+
+	this.scene = new BattleScene(this, fightersIds);
+};
+
+Game.prototype.onResize = function() {
+	this.canvas.width = document.body.clientWidth;
+	this.canvas.height = document.body.clientHeight;
+	this.graphics.width = this.canvas.width;
+	this.graphics.height = this.canvas.height;
+
+	this.scale = this.canvas.height / Game.HEIGHT;
+};

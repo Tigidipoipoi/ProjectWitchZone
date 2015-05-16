@@ -18,7 +18,7 @@ var Fighter = function (id, isInPlayerTeam) {
 			this.weakness = Element.FIRE;
 			this.toughness = Element.WIND;
 			
-			this.image = game.assetManager.getImage("axe");
+			this.image = game.assetManager.getImage("Wizards.wizard0");
 			break;
 		case 1:
 			this.name = "Number1";
@@ -33,7 +33,7 @@ var Fighter = function (id, isInPlayerTeam) {
 			this.weakness = Element.EARTH;
 			this.toughness = Element.FIRE;
 			
-			this.image = game.assetManager.getImage("axe");
+			this.image = game.assetManager.getImage("Wizards.wizard1");
 			break;
 		case 2:
 			this.name = "Number2";
@@ -48,7 +48,7 @@ var Fighter = function (id, isInPlayerTeam) {
 			this.weakness = Element.WIND;
 			this.toughness = Element.WATER;
 			
-			this.image = game.assetManager.getImage("axe");
+			this.image = game.assetManager.getImage("Wizards.wizard2");
 			break;
 		case 3:
 			this.name = "Number3";
@@ -63,7 +63,7 @@ var Fighter = function (id, isInPlayerTeam) {
 			this.weakness = Element.WATER;
 			this.toughness = Element.EARTH;
 			
-			this.image = game.assetManager.getImage("axe");
+			this.image = game.assetManager.getImage("Wizards.wizard3");
 			break;
 		case 4:
 			this.name = "Number4";
@@ -78,7 +78,7 @@ var Fighter = function (id, isInPlayerTeam) {
 			this.weakness = Element.FIRE;
 			this.toughness = Element.WATER;
 			
-			this.image = game.assetManager.getImage("axe");
+			this.image = game.assetManager.getImage("Wizards.wizard4");
 			break;
 		case 5:
 			this.name = "Number5";
@@ -93,7 +93,7 @@ var Fighter = function (id, isInPlayerTeam) {
 			this.weakness = Element.EARTH;
 			this.toughness = Element.FIRE;
 			
-			this.image = game.assetManager.getImage("axe");
+			this.image = game.assetManager.getImage("Wizards.wizard5");
 			break;
 		case 6:
 			this.name = "Number6";
@@ -108,7 +108,7 @@ var Fighter = function (id, isInPlayerTeam) {
 			this.weakness = Element.WIND;
 			this.toughness = Element.EARTH;
 			
-			this.image = game.assetManager.getImage("axe");
+			this.image = game.assetManager.getImage("Wizards.wizard6");
 			break;
 		case 7:
 			this.name = "Number7";
@@ -123,7 +123,7 @@ var Fighter = function (id, isInPlayerTeam) {
 			this.weakness = Element.WATER;
 			this.toughness = Element.WIND;
 			
-			this.image = game.assetManager.getImage("axe");
+			this.image = game.assetManager.getImage("Wizards.wizard7");
 			break;
 		case 8:
 			this.name = "Number8";
@@ -138,7 +138,7 @@ var Fighter = function (id, isInPlayerTeam) {
 			this.weakness = Element.FIRE;
 			this.toughness = Element.EARTH;
 			
-			this.image = game.assetManager.getImage("axe");
+			this.image = game.assetManager.getImage("Wizards.wizard8");
 			break;
 		case 9:
 			this.name = "Number9";
@@ -153,7 +153,7 @@ var Fighter = function (id, isInPlayerTeam) {
 			this.weakness = Element.EARTH;
 			this.toughness = Element.FIRE;
 			
-			this.image = game.assetManager.getImage("axe");
+			this.image = game.assetManager.getImage("Wizards.wizard9");
 			break;
 		case 10:
 			this.name = "Number10";
@@ -168,7 +168,7 @@ var Fighter = function (id, isInPlayerTeam) {
 			this.weakness = Element.WIND;
 			this.toughness = Element.WATER;
 			
-			this.image = game.assetManager.getImage("axe");
+			this.image = game.assetManager.getImage("Wizards.wizard10");
 			break;
 		case 11:
 			this.name = "Number11";
@@ -183,7 +183,7 @@ var Fighter = function (id, isInPlayerTeam) {
 			this.weakness = Element.WATER;
 			this.toughness = Element.WIND;
 			
-			this.image = game.assetManager.getImage("axe");
+			this.image = game.assetManager.getImage("Wizards.wizard11");
 			break;
 		case 12:
 			this.name = "Number12";
@@ -198,7 +198,7 @@ var Fighter = function (id, isInPlayerTeam) {
 			this.weakness = Element.FIRE;
 			this.toughness = Element.WIND;
 			
-			this.image = game.assetManager.getImage("axe");
+			this.image = game.assetManager.getImage("Wizards.wizard12");
 			break;
 		case 13:
 			this.name = "Number13";
@@ -213,7 +213,7 @@ var Fighter = function (id, isInPlayerTeam) {
 			this.weakness = Element.EARTH;
 			this.toughness = Element.WIND;
 			
-			this.image = game.assetManager.getImage("axe");
+			this.image = game.assetManager.getImage("Wizards.wizard13");
 			break;
 		case 14:
 			this.name = "Number14";
@@ -228,7 +228,7 @@ var Fighter = function (id, isInPlayerTeam) {
 			this.weakness = Element.WIND;
 			this.toughness = Element.WATER;
 			
-			this.image = game.assetManager.getImage("axe");
+			this.image = game.assetManager.getImage("Wizards.wizard14");
 			break;
 	}
 
