@@ -115,10 +115,6 @@ ToDo
 	Force to landscape
 	Selection perso
 		Affichage stats (tooltips)
-	Intégration
-		Combat
-			Finir affichage perso
-			Elements dispo pour l'arme
 	Navigation entre scènes
 		Ecran de fin de bataille
 		Ecran titre

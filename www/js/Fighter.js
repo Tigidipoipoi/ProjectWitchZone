@@ -241,14 +241,15 @@ Fighter.HEALTH_BAR_HEIGHT = 10;
 
 Fighter.prototype.render = function(g) {
 	g.save();
-		// LifeBar
 		if (this.isInPlayerTeam) {
 			g.translate(Game.WIDTH * 0.75 - Fighter.HEALTH_BAR_WIDTH,
-				Game.HEIGHT - Fighter.HEALTH_BAR_HEIGHT * 3);			
+				Game.HEIGHT - Fighter.HEALTH_BAR_HEIGHT * 3);
 		}
 		else {
-			g.translate(Fighter.HEALTH_BAR_WIDTH * 0.1, Fighter.HEALTH_BAR_HEIGHT);			
+			g.translate(Fighter.HEALTH_BAR_WIDTH * 0.1, Fighter.HEALTH_BAR_HEIGHT);
 		}
+
+		// LifeBar
 		g.strokeStyle = "black";
 		g.strokeRect(0, 0, Fighter.HEALTH_BAR_WIDTH, Fighter.HEALTH_BAR_HEIGHT);
 		g.fillStyle = "green";

@@ -269,7 +269,7 @@ BattleScene.prototype.render = function(g) {
 
 		// Renders the weapon selection
 		for (var i = 0; i < this.weaponSelectionSlots.length; ++i) {
-			this.weaponSelectionSlots[i].image = currentFighter.weapons[i].image;
+			this.weaponSelectionSlots[i].weapon = currentFighter.weapons[i];
 			this.weaponSelectionSlots[i].render(g);
 		}
 
