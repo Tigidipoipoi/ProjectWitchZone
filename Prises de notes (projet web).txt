@@ -117,5 +117,5 @@ ToDo
 		Affichage stats (tooltips)
 	Navigation entre scènes
 		Ecran de fin de bataille
-		Ecran titre
-			Options
+			BattleScene.gameOver pour afficher l'écran de fin de bataille.
+			Game.restart() lorsque tu veux renvoyer à l'écran tître.

@@ -106,3 +106,10 @@ Game.prototype.onResize = function() {
 
 	this.scale = this.canvas.height / Game.HEIGHT;
 };
+
+Game.prototype.restart = function() {
+	this.scene = null;
+	document.getElementById("title-screen").className = "";
+	document.getElementById("fighter-selection-screen").className = 
+		"fighter-selection disabled";
+};

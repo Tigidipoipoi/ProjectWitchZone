@@ -15,6 +15,7 @@ Point.prototype.update = function(timeData) {
 Point.prototype.render = function(g) {
 	g.save();
 		g.translate(this.x, this.y);
+
 		if (!this.weapon) {
 			g.fillStyle = this.active
 				? "green" : "black";

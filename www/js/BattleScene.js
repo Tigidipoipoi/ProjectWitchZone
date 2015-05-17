@@ -244,9 +244,7 @@ BattleScene.prototype.changeCurrentFighter = function(trainer) {
 	}
 	// No more fighters in team
 	else {
-		console.log(trainer.isPlayer
-			? "You have lost..."
-			: "You have won!");
+		this.gameOver(trainer.isPlayer);
 	}
 };
 
@@ -297,4 +295,10 @@ BattleScene.prototype.render = function(g) {
 		this.player.render(g);
 		this.foe.render(g);
 	g.restore();
+};
+
+BattleScene.prototype.gameOver = function(playerHasLost) {
+	console.log(playerHasLost
+		? "You have lost..."
+		: "You have won!");
 };

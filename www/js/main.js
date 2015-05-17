@@ -5,9 +5,12 @@ window.addEventListener("load", function () {
 	console.log("Page chargée en " + (t2 - t).toString() + " ms.");
 
 	document.getElementById("play-button").addEventListener("click", function() {
-		game = new Game();
+		if (!game.assetManager) {
+			game = new Game();
+		}
 		document.getElementById("title-screen").className = "disabled";
-		document.getElementById("fighter-selection-screen").className = "fighter-selection";
+		document.getElementById("fighter-selection-screen").className =
+			"fighter-selection";
 	});
 });
 
