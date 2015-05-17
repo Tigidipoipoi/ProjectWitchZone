@@ -1,0 +1,73 @@
+#fighter-selection-screen {
+	position: absolute;	
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	text-align: center;
+}
+	ul#fighter-list {
+		padding: 0;
+		margin: 0;
+		width: 55%;
+		height: 50%;
+		display: inline-block;
+	}
+		li.fighter-selection {
+			border: 3px black solid;
+			border-radius: 5px;
+			margin-left: 1%;
+			margin-top: 1%;
+
+			float: left;
+			height: 29%;
+			width: 14%;
+			display: block;
+		}
+		li.fighter-selection.selected {
+
+			border-color: white;
+		}
+			li.fighter-selection img {
+				width: 100%;
+				height: 100%;
+			}
+
+	#tooltips-and-buttons {
+		height: 20%;
+		width: 100%;
+		text-align: center;
+	}
+		#add-fighter {
+			top: 290px;
+			left: 0;
+
+			height: 20px;
+		}
+		#remove-fighter{
+			top: 315px;
+			left: 0;
+
+			height: 20px;
+		}
+
+	ul#player-team {
+		padding: 0;
+		margin: 0;
+		display: inline-block;
+		top: 20%;
+		width: 25%;
+		height: 30%;
+	}
+		ul#player-team li {
+			height: 50%;
+			width: 29%;
+			margin-top: 0;
+		}
+
+	#confirm-team {
+		top: 340px;
+		left: 0;
+
+		height: 20px;
+	}

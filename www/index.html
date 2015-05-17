@@ -4,7 +4,7 @@
 <title>Project WitchZone</title>
 	<meta charset="UTF-8" />
 	<link rel="stylesheet" href="css/base.css" media="screen" />
-	<link rel="stylesheet" href="css/scene.css" media="screen" />
+	<link rel="stylesheet" href="css/fighterSelection.css" media="screen" />
 	<link rel="stylesheet" href="css/battle.css" media="screen" />
 
 	<script type="text/javascript" src="loadingData.json"></script>
@@ -25,22 +25,7 @@
 <body>
 	<div id="screen">
 		<canvas id="game"></canvas>
-		<!--
-			<div id="main-title">
-				<div id="game-title">Project WitchZone</div>
-				
-				Title Screen
-				<button id="play" onclick="play()">Play</button>
-				<button id="help" onclick="help()">Help</button>
-				<button id="options" onclick="options()">Options</button>
-			</div>
-			<div id="cast-circle">
-				<div id="cast-point0" class="cast-point"></div>
-				<div id="cast-point1" class="cast-point"></div>
-				<div id="cast-point2" class="cast-point"></div>
-				<div id="cast-point3" class="cast-point"></div>
-			</div>
-		-->
+
 		<div id="title-screen">
 			<h1>Project Wizard Zone</h1>
 			<button id="play-button">
@@ -52,6 +37,18 @@
 			<ul id="fighter-list" class="fighter-selection">
 			</ul>
 
+			<div id="tooltips-and-buttons">
+				<button id="add-fighter" name="add-fighter" disabled>
+					Add
+				</button>
+				<button id="remove-fighter" name="remove-fighter" disabled>
+					Remove
+				</button>
+				<button id="confirm-team" name="confirm-team" disabled>
+					Battle!
+				</button>
+			</div>
+
 			<ul id="player-team" class="fighter-selection">
 				<li id="first-fighter" class="fighter-selection selected">
 				</li>
@@ -60,16 +57,6 @@
 				<li id="third-fighter" class="fighter-selection">
 				</li>
 			</ul>
-
-			<button id="add-fighter" name="add-fighter" disabled>
-				Add
-			</button>
-			<button id="remove-fighter" name="remove-fighter" disabled>
-				Remove
-			</button>
-			<button id="confirm-team" name="confirm-team" disabled>
-				Battle!
-			</button>
 		</div>
 	</div>
 </body>

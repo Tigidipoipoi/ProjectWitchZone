@@ -9,7 +9,6 @@ var BattleScene = function(game, fightersIds) {
 			(e.clientY - offset.top));
 	});
 
-	console.log("Gné ?");
 	this.background = this.game.assetManager.getImage("incantation-circle");
 
 	this.isDrawing = false;

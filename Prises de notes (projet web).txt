@@ -112,15 +112,13 @@ Questions à poser
 	Comment adapter la résolution d'écran
 
 ToDo
-	Resize
-		Update CSS for fighter Selection
 	Force to landscape
-	Intégration
 	Selection perso
-		Affichage stats
-	Combat
-		Elements dispo pour l'arme
-		Finir affichage perso
+		Affichage stats (tooltips)
+	Intégration
+		Combat
+			Finir affichage perso
+			Elements dispo pour l'arme
 	Navigation entre scènes
 		Ecran de fin de bataille
 		Ecran titre
