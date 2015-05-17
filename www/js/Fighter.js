@@ -267,5 +267,14 @@ Fighter.prototype.render = function(g) {
 			}
 		}
 
+		// Sprite
+		if (this.isInPlayerTeam) {
+			g.drawImage(this.image, -Fighter.HEALTH_BAR_WIDTH, -80, 80, 80);
+		}
+		else {
+			g.scale(-1, 1);
+			g.drawImage(this.image, -200, 0, 80, 80);
+		}
+
 	g.restore();
 };
