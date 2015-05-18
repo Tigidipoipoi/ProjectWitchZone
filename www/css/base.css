@@ -48,4 +48,15 @@ html, body {
 	}
 
 	#title-screen button {
+		margin-top: 10%;
+		height : 10%;
+		width : 15%;
+		font-weight:bold;
+		color:white;
+		background-color: rgb(198,54,156);
+		font-size : 2em;
+		border-radius : 20%;
+		
 	}
+
+

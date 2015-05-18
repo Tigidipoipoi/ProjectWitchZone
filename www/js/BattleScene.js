@@ -301,4 +301,5 @@ BattleScene.prototype.gameOver = function(playerHasLost) {
 	console.log(playerHasLost
 		? "You have lost..."
 		: "You have won!");
+	game.restart()
 };

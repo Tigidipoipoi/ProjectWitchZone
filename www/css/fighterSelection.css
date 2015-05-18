@@ -38,18 +38,40 @@
 		width: 100%;
 		text-align: center;
 	}
-		#add-fighter {
-			top: 290px;
-			left: 0;
-
-			height: 20px;
+		.list-button{
+			list-style-type: none;
+			height: 30%;
 		}
-		#remove-fighter{
-			top: 315px;
-			left: 0;
-
-			height: 20px;
-		}
+			#add-fighter {
+				height: 100%;
+				width:4%;
+				font-weight:bold;
+				color:white;
+				background-color: rgb(198,54,156);
+				font-size : 2em;
+				border-radius : 20%;
+			}
+			#remove-fighter{
+				height: 100%;
+				width:7%;
+				font-weight:bold;
+				color:white;
+				background-color: rgb(198,54,156);
+				font-size : 2em;
+				border-radius : 20%;
+			}
+			#confirm-team{
+				height: 100%;
+				width:5%;
+				font-weight:bold;
+				color:white;
+				background-color: rgb(198,54,156);
+				font-size : 2em;
+				border-radius : 20%;
+			}
+			.disabled{
+				color:white;
+			}
 
 	ul#player-team {
 		padding: 0;
@@ -64,10 +86,3 @@
 			width: 29%;
 			margin-top: 0;
 		}
-
-	#confirm-team {
-		top: 340px;
-		left: 0;
-
-		height: 20px;
-	}

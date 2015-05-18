@@ -15,6 +15,7 @@ CharacterScene.prototype.initCharacterList = function() {
 	var self = this;
 
 	// Fighters list
+	
 	var fighterListUl = document.getElementById("fighter-list");
 	for (var i = 0; i < 15; ++i) {
 		var fighter = new Fighter(i, false);
