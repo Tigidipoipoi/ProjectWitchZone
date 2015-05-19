@@ -97,7 +97,7 @@ BattleScene.prototype.stockPlayerSpell = function(currentElement) {
 		this.player.fighters[this.player.currentFighterIndex];
 	var foeFighter = this.foe.fighters[this.foe.currentFighterIndex];
 
-	this.playerSpell = new Spell(currentElement, playerFighter, foeFighter);
+	this.playerSpell = new Spell(this, currentElement, playerFighter, foeFighter);
 };
 
 BattleScene.prototype.stockFoeSpell = function() {
@@ -107,7 +107,7 @@ BattleScene.prototype.stockFoeSpell = function() {
 	var rngIndex = getRandomInt(0, 2);
 	var currentElement = foeWeapon.availableElements[rngIndex];
 
-	this.foeSpell = new Spell(currentElement, foeFighter, playerFighter);
+	this.foeSpell = new Spell(this, currentElement, foeFighter, playerFighter);
 };
 
 BattleScene.prototype.onClick = function(x, y) {
@@ -116,35 +116,37 @@ BattleScene.prototype.onClick = function(x, y) {
 
 	var activeClampPoints = 0;
 
-	if (this.player.fighters[this.player.currentFighterIndex].currentWeaponIndex
-		> -1) {
-		// Checking if we have clicked on incantation points
-		for (var i = 0; i < this.clampPoints.length; ++i) {
-			if (this.clampPoints[i].doesCollide(x, y)) {
-				var tPtsLength = this.touchedPoints.length;
+	if (!this.isBattlePhase) {
+		if (this.player.fighters[this.player.currentFighterIndex].currentWeaponIndex
+			> -1) {
+			// Checking if we have clicked on incantation points
+			for (var i = 0; i < this.clampPoints.length; ++i) {
+				if (this.clampPoints[i].doesCollide(x, y)) {
+					var tPtsLength = this.touchedPoints.length;
 
-				// We don't add last touched and previous last touched
-				if (this.touchedPoints[tPtsLength - 1] != this.clampPoints[i]
-					&& this.touchedPoints[tPtsLength - 2] != this.clampPoints[i]) {
-					this.clampPoints[i].active = true;
-					this.touchedPoints[tPtsLength] = this.clampPoints[i];
+					// We don't add last touched and previous last touched
+					if (this.touchedPoints[tPtsLength - 1] != this.clampPoints[i]
+						&& this.touchedPoints[tPtsLength - 2] != this.clampPoints[i]) {
+						this.clampPoints[i].active = true;
+						this.touchedPoints[tPtsLength] = this.clampPoints[i];
 
-					if (tPtsLength == 3) {
-						this.tryToCast();
+						if (tPtsLength == 3) {
+							this.tryToCast();
+						}
+						break;
 					}
-					break;
 				}
-			}
-		}	
-	}
-	
-	// Checking for the weapon selection
-	for (var i = 0; i < this.weaponSelectionSlots.length; ++i) {
-		if (this.weaponSelectionSlots[i].doesCollide(x, y)) {
-			this.player.fighters[this.player.currentFighterIndex]
-				.currentWeaponIndex = i;
+			}	
 		}
-	}
+
+		// Checking for the weapon selection
+		for (var i = 0; i < this.weaponSelectionSlots.length; ++i) {
+			if (this.weaponSelectionSlots[i].doesCollide(x, y)) {
+				this.player.fighters[this.player.currentFighterIndex]
+					.currentWeaponIndex = i;
+			}
+		}
+	}	
 };
 
 BattleScene.prototype.tryToCast = function() {
@@ -157,12 +159,7 @@ BattleScene.prototype.tryToCast = function() {
 		return;
 	}
 
-	this.stockPlayerSpell(currentElement);
-	this.stockFoeSpell();
-
-	this.sortSpellsBySpeed();
-
-	this.battlePhase();
+	this.startBattlePhase(currentElement);
 };
 
 BattleScene.prototype.resetDraw = function() {
@@ -191,12 +188,12 @@ BattleScene.prototype.sortSpellsBySpeed = function() {
 	else {
 		var rng = getRandomInt(0, 2);
 		if (rng % 2 == 1) {
-		this.spellsToCast[0] = this.playerSpell;
-		this.spellsToCast[1] = this.foeSpell;
+			this.spellsToCast[0] = this.playerSpell;
+			this.spellsToCast[1] = this.foeSpell;
 		}
 		else {
-		this.spellsToCast[0] = this.foeSpell;
-		this.spellsToCast[1] = this.playerSpell;
+			this.spellsToCast[0] = this.foeSpell;
+			this.spellsToCast[1] = this.playerSpell;
 		}
 	}
 
@@ -204,30 +201,64 @@ BattleScene.prototype.sortSpellsBySpeed = function() {
 	delete this.playerSpell;
 };
 
-BattleScene.prototype.battlePhase = function() {
-	var spellsToCastCount = this.spellsToCast.length;
+BattleScene.prototype.startBattlePhase = function(currentElement) {
+	this.stockPlayerSpell(currentElement);
+	this.stockFoeSpell();
+	this.sortSpellsBySpeed();
+
+	this.isBattlePhase = true;
+
+	// We cast all spells that must be cast
+	// for (var i = 0; i < spellsToCastCount; ++i) {
+	// 	console.log(this.spellsToCast[i].caster.isInPlayerTeam
+	// 		? "Your turn: " : "Foe's turn: ");
+	// 	var targetIsAlive = this.spellsToCast[i].cast();
+
+	// 	// If the target is dead, we mustn't cast the remaining spells
+	// 	if (!targetIsAlive) {
+	// 		deadTarget = this.spellsToCast[i].target;
+	// 		break;
+	// 	}
+	// }
+	// delete this.spellsToCast;
+
+	// // If a fighter is dead we change it
+	// if (deadTarget != null) {
+	// 	this.changeCurrentFighter(deadTarget.isInPlayerTeam
+	// 		? this.player : this.foe);
+	// }
+	
+	// // Change foe's weapon
+	// this.foe.fighters[this.foe.currentFighterIndex]
+	// 	.currentWeaponIndex = getRandomInt(0, 2);
+
+	// this.isBattlePhase = false;
+};
+
+BattleScene.prototype.spellDoneCasting = function(castedSpell, targetIsAlive) {
+	this.spellsToCast.splice(this.spellsToCast.indexOf(castedSpell), 1);
 	var deadTarget = null;
 
-	for (var i = 0; i < spellsToCastCount; ++i) {
-		console.log(this.spellsToCast[i].caster.isInPlayerTeam
-			? "Your turn: " : "Foe's turn: ");
-		var targetIsAlive = this.spellsToCast[i].cast();
+	if (!targetIsAlive) {
+		deadTarget = castedSpell.target;
+		delete this.spellsToCast;
+	}
 
-		if (!targetIsAlive) {
-			deadTarget = this.spellsToCast[i].target;
-			break;
+	if (!this.spellsToCast
+		|| this.spellsToCast.length == 0) {
+		delete this.spellsToCast;
+
+		if (deadTarget != null) {
+			this.changeCurrentFighter(deadTarget.isInPlayerTeam
+				? this.player : this.foe);
 		}
-	}
-	delete this.spellsToCast;
 
-	if (deadTarget != null) {
-		this.changeCurrentFighter(deadTarget.isInPlayerTeam
-			? this.player : this.foe);
+		// Change foe's weapon
+		this.foe.fighters[this.foe.currentFighterIndex]
+			.currentWeaponIndex = getRandomInt(0, 2);
+
+		this.isBattlePhase = false;
 	}
-	
-	// Change foe's weapon
-	this.foe.fighters[this.foe.currentFighterIndex]
-		.currentWeaponIndex = getRandomInt(0, 2);
 };
 
 BattleScene.prototype.changeCurrentFighter = function(trainer) {
@@ -249,6 +280,10 @@ BattleScene.prototype.changeCurrentFighter = function(trainer) {
 };
 
 BattleScene.prototype.update = function(timeData) {
+	if (this.isBattlePhase) {
+		// Updates the 1st casting spell in queue
+		this.spellsToCast[0].update(timeData);
+	}
 };
 
 BattleScene.prototype.render = function(g) {
@@ -260,9 +295,15 @@ BattleScene.prototype.render = function(g) {
 		var currentFighter =
 			this.player.fighters[this.player.currentFighterIndex];
 
-		// Renders the clamp points
-		for(var i = 0 ; i < this.clampPoints.length; ++i) {
-			this.clampPoints[i].render(g);
+		if (!this.isBattlePhase) {
+			for(var i = 0 ; i < this.clampPoints.length; ++i) {
+				// Renders the clamp points
+				this.clampPoints[i].render(g);
+			}
+		}
+		else {
+			// Renders the 1st casting spell in queue
+			this.spellsToCast[0].render(g);
 		}
 
 		// Renders the weapon selection
