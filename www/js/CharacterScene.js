@@ -11,6 +11,7 @@ var CharacterScene = function(game, id) {
 	debugCharacterScene = this;
 };
 
+
 CharacterScene.prototype.initCharacterList = function() {
 	var self = this;
 
@@ -50,6 +51,8 @@ CharacterScene.prototype.initCharacterList = function() {
 	this.addButton = document.getElementById("add-fighter");
 	this.removeButton = document.getElementById("remove-fighter");
 	this.battleButton = document.getElementById("confirm-team");
+	this.tooltipRight = document.getElementById("tooltip-right");
+	this.tooltipLeft = document.getElementById("tooltip-left");
 
 	this.addButton.addEventListener("click", function () {
 		self.addButtonAction(fighterListUl);

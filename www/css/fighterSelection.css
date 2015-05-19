@@ -38,41 +38,103 @@
 		width: 100%;
 		text-align: center;
 	}
-		.list-button{
-			list-style-type: none;
-			height: 30%;
+		#button-middle{
+
 		}
-			#add-fighter {
-				height: 100%;
-				width:4%;
-				font-weight:bold;
-				color:white;
-				background-color: rgb(198,54,156);
-				font-size : 2em;
-				border-radius : 20%;
+			.list-button{
+				list-style-type: none;
+				height: 30%;
 			}
-			#remove-fighter{
-				height: 100%;
-				width:7%;
+				#add-fighter {
+					height: 100%;
+					width:10%;
+					font-weight:bold;
+					color:white;
+					background-color: rgb(198,54,156);
+					font-size : 2em;
+					border-radius : 20%;
+				}
+				#remove-fighter{
+					height: 100%;
+					width:10%;
+					font-weight:bold;
+					color:white;
+					background-color: rgb(198,54,156);
+					font-size : 2em;
+					border-radius : 20%;
+				}
+				#confirm-team{
+					height: 100%;
+					width:10%;
+					font-weight:bold;
+					color:white;
+					background-color: rgb(198,54,156);
+					font-size : 2em;
+					border-radius : 20%;
+				}
+				.disabled{
+					color:white;
+				}
+				
+		.tooltip{
+			height:180%;
+			width:30%;
+			background-color : rgb(255,255,255);
+			border-radius: 5%;
+			box-shadow: 0px 0px 10% #000000;	
+			background-image: -webkit-linear-gradient(top, #fffafa, #ffb0b7);
+			background-image: linear-gradient(top, #fffafa, #ffb0b7);
+			background-clip: padding-box;
+			text-align:center;
+		}
+		#tooltip-left{
+			margin-left:5%;
+			float:left;			
+		}
+		#tooltip-right{
+			margin-right:5%;
+			float:right;
+		}
+			.name-tooltip{
+				display:inherit;
+				font-size:2em;
 				font-weight:bold;
-				color:white;
-				background-color: rgb(198,54,156);
-				font-size : 2em;
-				border-radius : 20%;
 			}
-			#confirm-team{
-				height: 100%;
-				width:5%;
+			.weakness-tooltip{
+				display:inherit;
+				font-size:1em;
 				font-weight:bold;
-				color:white;
-				background-color: rgb(198,54,156);
-				font-size : 2em;
-				border-radius : 20%;
+				
+				color: rgb(255,0,0);
 			}
-			.disabled{
-				color:white;
+			.toughness-tooltip{
+				display:inherit;
+				font-size:1em;
+				font-weight:bold;
+				
+				color:rgb(30,145,30);
+			}
+			.img-element{
+				height : 40%;
+				width:15%;
+				background-color:rgb(0,0,0);
+				margin-left:30%;
 			}
 
+			.weapon-tooltip-1{
+				height : 40%;
+				width:15%;
+				background-color:rgb(0,0,0);
+				float:left;
+				margin-left:30%;
+			}
+			.weapon-tooltip-2{
+				height : 40%;
+				width:15%;
+				background-color:rgb(0,0,0);
+				float:right;
+				margin-right:30%;
+			}
 	ul#player-team {
 		padding: 0;
 		margin: 0;

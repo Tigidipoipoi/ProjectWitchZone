@@ -38,21 +38,43 @@
 			</ul>
 
 			<div id="tooltips-and-buttons">
-				<li class="list-button">
-					<button id="add-fighter" name="add-fighter" disabled>
-						Add
-					</button>
-				</li>
-				<li class="list-button">
-					<button id="remove-fighter" name="remove-fighter" disabled>
-						Remove
-					</button>
-				</li>
-				<li class="list-button">
-					<button id="confirm-team" name="confirm-team" disabled>
-						Battle!
-					</button>
-				</li>
+				<div id="tooltip-left"class="tooltip">
+					<text id="name-tooltip-left" class="name-tooltip">name :</text>
+					<text id="weakness-tooltip-left"class="weakness-tooltip">weakness :</text>
+					<div id="imgweakness-left" class="img-element"></div>
+					<text id="toughness-tooltip-left"class="toughness-tooltip">toughness :</text>
+					<div id="imgtoughness-left" class="img-element"></div>
+					<div id="weapons-1-tooltip-left"class="weapon-tooltip-1"></div>
+					<div id="weapons-2-tooltip-left"class="weapon-tooltip-2"></div>
+					
+				</div>
+				<div id="tooltip-right" class="tooltip">
+					<text id="name-tooltip-right"class="name-tooltip">name :</text>
+					<text id="weakness-tooltip-right"class="weakness-tooltip">weakness :
+					<div id="imgweakness-right" class="img-element"></div>
+					<text id="toughness-tooltip-right"class="toughness-tooltip">toughness :</text>
+					<div id="imgtoughness-right" class="img-element"></div>
+					<div id="weapons-1-tooltip-right"class="weapon-tooltip-1"></div>
+					<div id="weapons-2-tooltip-right"class="weapon-tooltip-2"></div>
+				</div>
+				
+				<ul id="button-middle">
+					<li class="list-button">
+						<button id="add-fighter" name="add-fighter" disabled>
+							Add
+						</button>
+					</li>
+					<li class="list-button">
+						<button id="remove-fighter" name="remove-fighter" disabled>
+							Remove
+						</button>
+					</li>
+					<li class="list-button">
+						<button id="confirm-team" name="confirm-team" disabled>
+							Battle!
+						</button>
+					</li>
+				</ul>
 			</div>
 
 			<ul id="player-team" class="fighter-selection">
