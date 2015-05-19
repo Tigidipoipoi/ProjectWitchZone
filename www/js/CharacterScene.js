@@ -121,7 +121,34 @@ CharacterScene.prototype.fighterTeamSelected = function(clickedElement, fighterT
 	for (var i = 0; i < 3; ++i) {
 		fighterTeamUl.children[i].className = "fighter-selection";
 	}
-	
+
+	if (clickedElement.children[0]) {
+		var fighter = new Fighter(clickedElement.children[0].alt, false);
+		
+		// Name
+		this.tooltipLeft.children[0].innerHTML = "name: " + fighter.name;
+		
+		// Weakness
+		var weaknessImg = document.createElement("img");
+		weaknessImg.src = getElementImage(fighter.weakness).src;
+		if (this.tooltipLeft.children[2].children[0] != null) {
+			this.tooltipLeft.children[2].children[0].src = weaknessImg.src;
+		}
+		else {
+			this.tooltipLeft.children[2].appendChild(weaknessImg);
+		}
+
+		// Toughness
+		var toughnessImg = document.createElement("img");
+		toughnessImg.src = getElementImage(fighter.toughness).src;
+		if (this.tooltipLeft.children[4].children[0] != null) {
+			this.tooltipLeft.children[4].children[0].src = toughnessImg.src;
+		}
+		else {
+			this.tooltipLeft.children[4].appendChild(toughnessImg);
+		}
+	}
+
 	this.selectedPlayerFighter = clickedElement;
 	clickedElement.className = "fighter-selection selected";
 	if (clickedElement.children.length > 0) {
@@ -137,6 +164,33 @@ CharacterScene.prototype.fighterTeamSelected = function(clickedElement, fighterT
 CharacterScene.prototype.fighterListSelected = function(clickedElement, fighterListUl) {
 	for (var i = 0; i < 15; ++i) {
 		fighterListUl.children[i].className = "fighter-selection";
+	}
+
+	if (clickedElement.children[0]) {
+		var fighter = new Fighter(clickedElement.children[0].alt, false);
+		
+		// Name
+		this.tooltipRight.children[0].innerHTML = "name: " + fighter.name;
+		
+		// Weakness
+		var weaknessImg = document.createElement("img");
+		weaknessImg.src = getElementImage(fighter.weakness).src;
+		if (this.tooltipRight.children[2].children[0] != null) {
+			this.tooltipRight.children[2].children[0].src = weaknessImg.src;
+		}
+		else {
+			this.tooltipRight.children[2].appendChild(weaknessImg);
+		}
+
+		// Toughness
+		var toughnessImg = document.createElement("img");
+		toughnessImg.src = getElementImage(fighter.toughness).src;
+		if (this.tooltipRight.children[4].children[0] != null) {
+			this.tooltipRight.children[4].children[0].src = toughnessImg.src;
+		}
+		else {
+			this.tooltipRight.children[4].appendChild(toughnessImg);
+		}
 	}
 	
 	clickedElement.className = "fighter-selection selected";

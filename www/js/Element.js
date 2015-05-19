@@ -21,7 +21,7 @@ getElementImage = function (element) {
 		case Element.WATER:
 			return game.assetManager.getImage("Elements.water");
 		default:
-			console.log("Wrong element: " + element.toString());
+			console.log("Wrong element: " + element);
 			return null;
 	}
 };

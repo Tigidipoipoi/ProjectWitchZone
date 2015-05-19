@@ -1,10 +1,11 @@
 var Fighter = function (id, isInPlayerTeam) {
+	id = parseInt(id);
+	
 	this.id = id;
 	this.isInPlayerTeam = isInPlayerTeam;
 
 	this.weapons = [];
 	switch (id) {
-		default:
 		case 0:
 			this.name = "Number0";
 
